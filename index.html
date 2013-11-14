@@ -7,11 +7,22 @@
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <script>
         $.getJSON('/projects.json', function(json, textStatus) {
+                var projectList = $('#project-list')
                 console.log(json);
+                var obj = JSON.parse(json)
+                for(var i in obj){
+                    var category = $('<li></li>').html(i)
+                    var projects = $('<ul></ul>')
+                    for(var j in obj[i]){
+                        projects.append("<li></li>").html(obj[i][j])
+                    }
+                    category.append(projects)
+                    projectList.append(cat)
+                }
         });
     </script>
 </head>
-<body style='text-align: center; width: 1263px;'>
+<body style='text-align: center;'>
     <h2>Mobiusklein's Project Page</h2>
     <ol id='project-list'>
         
