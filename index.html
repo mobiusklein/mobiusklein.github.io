@@ -9,7 +9,7 @@
         $.getJSON('/projects.json', function(json, textStatus) {
                 var projectList = $('#project-list')
                 console.log(json);
-                var obj = JSON.parse(json)
+                var obj = json
                 for(var i in obj){
                     var category = $('<li></li>').html(i)
                     var projects = $('<ul></ul>')
