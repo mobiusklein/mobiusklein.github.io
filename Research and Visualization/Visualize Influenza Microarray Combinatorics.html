@@ -1,0 +1,279 @@
+
+<html>
+<head>
+<title>Disease Data Sets</title>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.3/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<style>
+circle {
+  fill: rgb(31, 119, 180);
+  fill-opacity: .25;
+  stroke: rgb(31, 119, 180);
+  stroke-width: 1px;
+}
+.leaf circle {
+  fill: #ff7f0e;
+  fill-opacity: .99;
+}
+text {
+  font: 10px sans-serif;
+  z-index: 2
+}
+td {
+  font-size: 12px;
+}
+</style><script type="text/javascript" id='data'>
+    var myData = [{"src": "E-GEOD-20346 - Expression profiling of critically ill influenza and bacterial pneumonia patients, also influenza vaccination recipients", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-20346/"], "Disease": ["H1N1", "Bacterial Pneumonia", "H1N1 vaccine"], "Comments": ["Influenza Strain unknown", "assumed to be H1N1"], "Platform": ["Illumina HumanHT-12 v3.0 Expression BeadChip"], "Tissue": ["Blood"]}, {"src": "E-GEOD-21802 - Hosts responses in critical disease caused by pandemic H1N1", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-21802/"], "Disease": ["H1N1"], "Comments": ["The strain is identified as nvH1N1"], "Platform": ["Illumina Human-6 v2 Expression BeadChip"], "Tissue": ["Blood", "Pharynx"]}, {"src": "E-GEOD-22212 - Expression profile of lungs from two fatal H5N1 influenza cases", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-22212/"], "Disease": ["H5N1"], "Comments": ["Patients were fatal"], "Platform": ["Illumina Human-6 v2 Expression BeadChip"], "Tissue": ["Lung"]}, {"src": "E-GEOD-24533 - Expression data of influenza A-infected human type I-like alveolar epithelial cells", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-24533/"], "Disease": ["H1N1"], "Comments": ["Differentiates between seasonal H1N1 and pandemic H1N1"], "Platform": ["Affymetrix GeneChip Human Gene 1.0 ST Array"], "Tissue": ["Type I-like Alveolar Epithelial Cells"]}, {"Comment": ["Pandemic H1N1"], "src": "E-GEOD-27131 - Peripheral blood cells expression data form 7 patients with severe pdm(H1N1) influensa and 7 gender and age matched healthy controls", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-27131/"], "Disease": ["H1N1"], "Platform": ["Affymetrix GeneChip Human Gene 1.0 ST Array"], "Tissue": ["Blood"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-28166/"], "src": "E-GEOD-28166 - Host Regulatory Network Response to Infection with Highly Pathogenic H5N1 Avian Influenza Virus", "Tissue": ["Calu-3 Cells"], "Disease": ["H5N1"], "Platform": ["Agilent Whole Human Genome Microarray 4x44K 014850 G4112F (85 cols x 532 rows)"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-32138/"], "src": "E-GEOD-32138 - The response of human primary airway epithelial cells to Influenza or RSV infection", "Tissue": ["Airway Epithelial Cells"], "Disease": ["H1N1", "RSV"], "Platform": ["Agilent Whole Human Genome Microarray 4x44K 014850 G4112F (85 cols x 532 rows)"]}, {"src": "E-GEOD-32139 - The response of human primary airway epithelial cells to Influenza or RSV infection", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-32139/?query=GSE32139"], "Disease": ["H1N1", "RSV"], "Comments": ["Influenza strain not specified", "assuming H1N1"], "Platform": ["Illumina HumanHT-12 v3.0 Expression BeadChip"], "Tissue": ["Airway Epithelial Cells"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-33142/"], "src": "E-GEOD-33142 - ICL002 Time course of Calu-3 cells infected with Influenza A-VN-1203-04", "Tissue": ["Calu-3 Cells"], "Disease": ["Influenza A/VN/1203/04"], "Platform": ["Agilent Whole Human Genome Microarray 4x44K 014850 G4112F (85 cols x 532 rows)"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-35283/"], "src": "E-GEOD-35283 - Highly pathogenic influenza virus inhibit Inflammatory Responses in Monocytes via Activation of the Rar-Related Orphan Receptor Alpha (RORalpa)", "Tissue": ["Monocyte"], "Disease": ["FPV", "H5N1", "PR8"], "Platform": ["Affymetrix GeneChip Human Genome U133 Plus 2.0"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-35473/"], "src": "E-GEOD-35473 - Influenza virus A infected monocytes", "Tissue": ["Monocyte"], "Disease": ["H1N1"], "Platform": ["Illumina HumanWG-6 v3.0 Expression BeadChip"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-36012/"], "src": "E-GEOD-36012 - Genome-wide mRNA expression profiles induced by infection with the pandemic and seasonal influenza A viruses in macrophages", "Tissue": ["Macrophage cells"], "Disease": ["H1N1"], "Platform": ["Affymetrix GeneChip Human Gene 1.0 ST Array"]}, {"src": "E-GEOD-36555 - Host-influenza A virus(infA) interactions", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-36555/"], "Disease": ["H1N1"], "Comments": ["Study of mRNA expression under subset 36553. Full set contains miRNA data for H1N1 and H7N7 as well"], "Platform": ["Illumina HumanHT-12 v3.0 Expression BeadChip"], "Tissue": ["Human A549 Cells"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-40012/"], "src": "E-GEOD-40012 - Blood transcriptome of human bacterial and influenza A pneumonia", "Tissue": ["Blood"], "Disease": ["H1N1", "Bacterial Pneumonia", "Systemic Inflammatory Response Syndrome"], "Platform": ["Illumina HumanHT-12 v3.0 Expression BeadChip"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-40844/"], "src": "E-GEOD-40844 - ICL010 - Infection of Calu-3 cells with H1N1 influenza virus A - Netherlands-602-2009", "Tissue": ["Calu-3 Cells"], "Disease": ["H1N1"], "Platform": ["Agilent Whole Human Genome Microarray 4x44K 014850 G4112F (85 cols x 532 rows)"]}, {"src": "E-GEOD-46567 - cDNA microarray data after influenza A virus infection in nasal epithelial cells", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-46567/"], "Disease": ["H1N1"], "Comments": ["Samples subdivided by Day 0 and Day 2"], "Platform": ["Illumina HumanHT-12 V4.0 expression beadchip"], "Tissue": ["Nasal Epithilial Cells"]}, {"URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-48466/"], "src": "E-GEOD-48466 - Expression data from well-differentiated human bronchial epithelial cells infected with H1N1 Influenza isolates", "Tissue": ["Bronchial Epithelial Cells"], "Disease": ["H1N1"], "Platform": ["Affymetrix U133 Plus 2.0 human microarrays"]}, {"src": "E-MEXP-2090 - Transcription profiling of human A549 lung cells after infection with influenza virus with and without virus protein PB1-F2 knocked out", "URL": ["http://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-2090/"], "Disease": ["H1N1"], "Platform": ["Agilent Whole Human Genome Microarray 4x44K 014850 G4112F (85 cols x 532 rows)"], "Tissue": ["Human A549 Cells"], "Conditions": ["influenza virus protein PB1-F2 differentially knocked out"]}, {"URL": ["http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0048979"], "src": "Gene Expression-Based Classifiers Identify Staphylococcus aureus Infection in Mice and Humans", "Tissue": ["Blood", "Nasal epithilelial cells"], "Disease": ["Staphylococcus aureus", "Escheria coli"], "Platform": ["Affymetrix GeneChip Mouse Genome 430 2.0 Array", "Affymetrix GeneChip Human Genome U133A 2.0"]}]
+    var keys = ['Tissue', 'Platform', 'Disease']
+    var displayExtras = ['URL', 'Comments']
+
+</script>
+<script type="text/javascript" id='driver'>
+var classList = {}
+var natName = {}
+
+var graphCenter = function(centerKey){
+    // Intermediate Graph data object
+    var center = {};
+    // Set of keys that are not centerKey
+    var targets = []
+    // Accumulate target keys to sub-group by
+    for(var i in keys){
+      if (keys[i] !== centerKey) targets.push(keys[i]);
+    }
+    // Construct a join-trees from the data sets rooted in the centerKey
+    // For each dataset
+    for (var i in myData){
+      var set = myData[i];
+      //console.log(set)
+      // For each member of centerKey class in the dataset
+      for(var k in set[centerKey]){
+        var setKey = set[centerKey][k];
+        // Initialize the sub-containers
+        if(typeof(center[setKey]) === 'undefined') {
+          center[setKey] = {};
+          for(var t in targets){
+            center[setKey][targets[t]] = [];
+          }
+        }
+        for (var t in targets){
+          center[setKey][targets[t]] = center[setKey][targets[t]].concat(set[targets[t]]);
+        }
+      }
+    }
+    // Convert the intermediate representation into a parameterized tree for D3
+    var graphObjComplete = {name: "Total", children:[], center: centerKey};
+    // For each member of the centerKey category
+    for (var i in center){
+      var graphObj = {name: i, children:[]};
+      var entry = center[i];
+      // Create sub-tree container
+
+      // For each target key
+      for (var t in targets){
+        var target = targets[t];
+        // Create sub-tree container
+        var targetSpace = {name: target, children:[]};
+        //Accumulator
+        var counter = {};
+        for (var e in entry[target]){
+          counter[entry[target][e]] = counter[entry[target][e]] ? counter[entry[target][e]] + 1 : 1;
+        }
+        for (var e in counter){
+          //console.log(e)
+          var targetInstance = {name: e, size: counter[e], owner: i, type: target}
+          targetSpace.children.push(targetInstance)
+        }
+        targetSpace.size = sizeOfChildren(targetSpace.children);
+        graphObj.children.push(targetSpace);
+      }
+      graphObj.size = graphObj.children.length;
+      graphObjComplete.children.push(graphObj);
+      graphObjComplete.size = graphObjComplete.children.length
+    }
+    return graphObjComplete;
+}
+
+var sizeOfChildren = function (children){
+  var total = 0;
+  for (var i in children) {
+    var child = children[i];
+    total += child.size;
+  }
+  return total;
+}
+
+var mirrorClassToNat = function(){
+  var mirror = {};
+  for (var i in classList){
+    mirror[classList[i]] = i;
+  }
+  return mirror;
+}
+
+var natToClass = function(natName){
+  return natName.toLowerCase().replace(/\s|\./g, '-');
+}
+
+var buildTopLevelChart = function(centerKey){
+  var graphCenterObj = graphCenter(centerKey);
+  var diameter = 960,
+      format = d3.format(",d");
+
+  var pack = d3.layout.pack()
+      .size([diameter - 4, diameter - 4])
+      .value(function(d) { return d.size; });
+
+  var svg = d3.select("#svg-container").append("svg")
+        .style("display", 'none')
+        .attr("width", diameter)
+        .attr("height", diameter)
+        .attr("id", natToClass(centerKey) + '-graph')
+      .append("g")
+        .attr("transform", "translate(2,2)");
+
+  var node = svg.datum(graphCenterObj).selectAll(".node")
+    .data(pack.nodes)
+    .enter().append("g")
+    .attr("class", function(d) { 
+      var type = d.children ? "node" : "leaf node";
+      classList[d.name] = natToClass(d.name);
+      return natToClass(d.name) + ' ' + type })
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    node.append("title")
+        .text(function(d) { 
+          return d.name + (d.children ? (d.children[0].children ? "" : ": " + d.size ) 
+            : ": " + format(d.size)); });
+
+    node.append("circle")
+        .attr("r", function(d) { return d.r; });
+
+    node.filter(function(d) { 
+      return !d.children; }).append("text")
+        .attr("dy", ".3em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.name.substring(0, d.r / 3); });
+
+    node.filter(function(d) { 
+      return !d.children; }).on("click", function(d){
+        var relevant = findDataByKeySet({centerKey: d.owner, centerKeyType: centerKey, 
+          juxKey: d.name, juxKeyType: d.type});
+        populateDetailModal(relevant);
+      })
+
+    node.filter(function(d) { 
+      return d.children && !d.children[0].children; }).filter(function(d){ return true})
+    .append("text")
+        .attr("dy", function(d){return '-' + d.r/9.5 + 'em'})
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.name.substring(0, d.r / 3); });
+
+    node.filter(function(d) { 
+      var two_tier = false
+      if (typeof(d.children) !== 'undefined'){
+        if(typeof(d.children[0].children) !== 'undefined'){
+          two_tier = true
+        }
+      }
+      return two_tier ; })
+    .append("text")
+        .attr("dy",  function(d){return '-' + d.r/12 + 'em';})
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.name.substring(0, d.r / 3); });
+  
+  d3.select(self.frameElement).style("height", diameter + "px");
+  natName = mirrorClassToNat();
+  jQuery("svg").fadeIn();
+}
+
+var fadeAway = function(){
+  jQuery("svg").fadeOut(900);
+  setTimeout(function(){jQuery("svg").remove()}, 900)
+}
+
+var findDataByKeySet = function(options){
+  centerKey = options.centerKey
+  centerKeyType = options.centerKeyType
+  juxKey = options.juxKey
+  juxKeyType = options.juxKeyType
+
+  var matches = [];
+  for(var i in myData){
+    var entry = myData[i];
+    if ((entry[centerKeyType].indexOf(centerKey) !== -1) && (entry[juxKeyType].indexOf(juxKey) !== -1)){
+      matches.push(entry);
+    }
+  }
+  return matches;
+}
+
+var populateDetailModal = function(data){
+  var modalRef = $("#detail-modal .modal-body #detail-table")
+  modalRef.html("")
+  var titleRow = $("<tr></tr>")
+  for (var k in keys){
+    titleRow.append("<th>" + keys[k] + "</th>")
+  }
+  modalRef.append(titleRow)
+  for (var e in displayExtras){
+    titleRow.append("<th>" + displayExtras[e] + "</th>")
+  }
+
+  for (var i = 0; i < data.length; i++){
+    var entry = $("<tr></tr>");  
+    for (var k in keys){
+      entry.append("<td>" + (data[i][keys[k]] ? data[i][keys[k]].join(",</br>") : "N/A") + "</td>")
+    }
+    for (var e in displayExtras){
+      if (displayExtras[e] === 'URL'){
+        entry.append("<td><a href='" + (data[i][displayExtras[e]] ? data[i][displayExtras[e]].join("") : "N/A") +"''>" +
+        (data[i][displayExtras[e]] ? data[i][displayExtras[e]].join(",</br>") : "N/A") + "</a></td>")
+      } 
+      else {
+        entry.append("<td>" + (data[i][displayExtras[e]] ? data[i][displayExtras[e]].join(",</br>") : "N/A") + "</td>")
+      }
+    }
+    modalRef.append(entry)
+  }
+  $("#detail-modal").modal()
+}
+
+$(function(){
+  buildTopLevelChart("Disease")
+  $('#disease-click').click(function(){ fadeAway(); setTimeout(function(){buildTopLevelChart("Disease")},990)})
+  $('#tissue-click').click(function(){ fadeAway(); setTimeout(function(){buildTopLevelChart("Tissue")},990)})
+  $('#platform-click').click(function(){ fadeAway(); setTimeout(function(){buildTopLevelChart("Platform")},990)})
+})
+</script>
+</head>
+<body style='text-align: center;'>
+<h3>
+A spatial plotting of the <a id='disease-click'>Disease</a> x <a id='tissue-click'>Tissue</a> x <a id='platform-click'>Platform</a> space collected (or available over ArrayExpress).</br>
+For count information or clarification on what a circle means, mouse over it.</br>
+</h3>
+<div id='svg-container'>
+</div>
+
+<div id='detail-modal' class='modal fade' tabindex='-1', role='dialog' aria-hidden="true" style="width:100%;">
+  <div class='modal-dialog' style="width:100%;">
+    <div class='modal-content' style="width:100%;">
+      <div class='modal-header' style="width:100%;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title">Details</h3>
+      </div>
+      <div class="modal-body" style="width:100%;">
+        <table id="detail-table" class="table table-compact">
+        </table>
+      </div>
+      <div class="modal-footer" style="width:100%;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
