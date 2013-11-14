@@ -14,7 +14,7 @@
                     var category = $('<li></li>').html(i)
                     var projects = $('<ul></ul>')
                     for(var j in obj[i]){
-                        projects.append("<li></li>").html(obj[i][j])
+                        projects.append("<li></li>").html('<a href="'encodeURI(i) + '/' + encodeURI(obj[i][j]) + '">' + obj[i][j] + '</a>')
                     }
                     category.append(projects)
                     projectList.append(category)
@@ -22,10 +22,13 @@
         });
     </script>
 </head>
-<body style='text-align: center;'>
-    <h2>Mobiusklein's Project Page</h2>
+<body >
+    <h2 style='text-align: center;'>Mobiusklein's Project Page</h2>
     <ol id='project-list'>
         
     </ol>
+<!-- <div id='sidebar' style='float: left; width: 20%; border: 1px black solid; padding: 5px; margin: 3px; -webkit-border-radius: 5px;'>
+    I've spent a lot of time trying to make my work web-ready, but have not yet found a good solution for sharing it. This is another in a series of attempts to avoid needing to buy or rent a server or a domain name.
+</div> -->
 </body>
 </html>
