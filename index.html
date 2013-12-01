@@ -1,34 +1,38 @@
 <html>
 <head>
-    <title>mobiusklein</title>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.3/d3.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <script>
-        $.getJSON('/projects.json', function(json, textStatus) {
-                var projectList = $('#project-list')
-                console.log(json);
-                var obj = json
-                for(var i in obj){
-                    var category = $('<li></li>').html(i)
-                    var projects = $('<ul></ul>')
-                    for(var j in obj[i]){
-                        projects.append("<li></li>").html('<a href="' + encodeURI(i) + '/' + encodeURI(obj[i][j]) + '">' + obj[i][j] + '</a>')
-                    }
-                    category.append(projects)
-                    projectList.append(category)
+<title>mobiusklein</title>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.3/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<script>
+    $.getJSON('/projects.json', function(json, textStatus) {
+            var projectList = $('#project-list')
+            console.log(json);
+            var obj = json
+            for(var i in obj){
+                var category = $('<li></li>').html(i)
+                var projects = $('<ul></ul>')
+                for(var j in obj[i]){
+                    projects.append("<li></li>").html('<a href="' + encodeURI(i) + '/' + encodeURI(obj[i][j]) + '">' + obj[i][j] + '</a>')
                 }
-        });
-    </script>
+                category.append(projects)
+                projectList.append(category)
+            }
+    });
+</script>
 </head>
 <body >
-    <h2 style='text-align: center;'>Mobiusklein's Project Page</h2>
+<h2 style='text-align: center;'>Mobiusklein's Project Page</h2>
+<div id='sidebar' style='float:left;'>
+    <h4>Projects</h4>
     <ol id='project-list'>
-        
     </ol>
-<!-- <div id='sidebar' style='float: left; width: 20%; border: 1px black solid; padding: 5px; margin: 3px; -webkit-border-radius: 5px;'>
-    I've spent a lot of time trying to make my work web-ready, but have not yet found a good solution for sharing it. This is another in a series of attempts to avoid needing to buy or rent a server or a domain name.
-</div> -->
+</div>
+<div id='content' style='clear:both;'>
+    
+</div>
+<div>
+</div>
 </body>
 </html>
