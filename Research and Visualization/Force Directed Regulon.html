@@ -18,12 +18,14 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+var data = {};
+
 var width = 2000,
     height = 2000;
 
 var force = d3.layout.force()
-    .charge(function(d){return -900 })
-    .gravity(1)
+    .charge(function(d){return -120 })
+    .gravity(0.1)
     .linkDistance(function(d){ return 30 })
     .size([width, height]);
 
@@ -36,7 +38,7 @@ d3.json("regulon.json", function(error, graph) {
       .nodes(graph.nodes)
       .links(graph.links)
       .start();
-
+  data = graph;
   var link = svg.selectAll(".link")
       .data(graph.links)
     .enter().append("line")
@@ -53,10 +55,6 @@ d3.json("regulon.json", function(error, graph) {
         if (d.name == 'Rv0757'){ val = 'teal' }
         return val; })
       .attr("r", function(d) { return Math.sqrt(d.regulonSize) < 3 ? 3 : Math.sqrt(d.regulonSize) })
-      .style('z-index', function(d){
-        var val = d.regulonSize > 1 ? 2 : 1;
-        if (d.name == 'Rv0757'){ val = 3 }
-        return val; })
       .call(force.drag);
 
   node.append("title")
