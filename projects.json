@@ -5,6 +5,7 @@
     ],
     "Research and Visualization" : [
         "Visualize Influenza Microarray Combinatorics",
-        "Force Directed Regulon"
+        "Force Directed Regulon",
+        "SequenceView"
     ]
 }

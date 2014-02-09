@@ -19,14 +19,24 @@
 <script>
 
 var data = {};
+var time = 0;
 
 var width = 2000,
     height = 2000;
 
 var force = d3.layout.force()
-    .charge(function(d){return -120 })
-    .gravity(0.1)
-    .linkDistance(function(d){ return 30 })
+    .charge(function(d){
+      var val = d.regulonSize > 0 ? -4000 : 0;
+      return val 
+    })
+    .gravity(function(d){
+      return 0.01;
+    })
+    .linkDistance(function(d){ 
+      var val = d.regulonSize > 0 ? 500 : 30
+      return val; 
+    })
+    .linkStrength(1)
     .size([width, height]);
 
 var svg = d3.select("body").append("svg")
@@ -38,29 +48,38 @@ d3.json("regulon.json", function(error, graph) {
       .nodes(graph.nodes)
       .links(graph.links)
       .start();
+
   data = graph;
+
   var link = svg.selectAll(".link")
       .data(graph.links)
     .enter().append("line")
       .attr("class", "link")
-      .style("stroke", function(d) { return d.value > 0 ? 'red' : 'blue'; });
+      .style("stroke", function(d) { 
+          return d.foldChange > 0 ? 'red' : 'blue'; })
+      .style("stroke-width", function(d){return Math.sqrt(Math.abs( d.foldChange ))});
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
     .enter().append("circle")
       .attr("class", "node")
-      .attr("r", 5)
       .style("fill", function(d) { 
         var val = d.regulonSize > 1 ? 'green' : 'blue';
         if (d.name == 'Rv0757'){ val = 'teal' }
-        return val; })
+        return val; 
+      })
       .attr("r", function(d) { return Math.sqrt(d.regulonSize) < 3 ? 3 : Math.sqrt(d.regulonSize) })
+      .attr('fixed', function(d){
+        
+      })
+      .attr("diagnostic", function(d,i,m){
+      })
       .call(force.drag);
 
   node.append("title")
-      .text(function(d) { return d.name; });
+      .text(function(d) { return d.name + ' ' + d.weight; });
 
-  force.on("tick", function() {
+  force.on("tick", function(e) {
     link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
@@ -68,6 +87,19 @@ d3.json("regulon.json", function(error, graph) {
 
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
+
+    if (time == 1) {
+    node.attr('nope', function(d, i){
+      console.log(d, i)
+    })
+    }
+    if(time == 0){
+      node.attr("nope", function(d){
+        d.fixed = d.regulonSize > 0 ? true : false;
+      })
+    }
+    time++;
+
   });
 });
 

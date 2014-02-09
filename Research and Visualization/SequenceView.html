@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variant Viewer</title>
+<!-- <script src="dependencies\js\Biojs.demin.js"></script>
+<script src="dependencies\js\Biojs.Sequence.demin.js"></script>
+<script src="dependencies\js\Biojs.Tooltip.demin.js"></script>
+<script src="dependencies\js\jquery-1.9.1.min.js"></script> -->
+<script src="https://sites.google.com/site/mobiuskleinscripthost/resources/js\lib.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src='https://sites.google.com/site/mobiuskleinscripthost/resources/js/driver.js'></script>
+
+
+<!-- <link rel="stylesheet" href="dependencies\css\flatly.bootstrap.css"/>
+<link rel="stylesheet" href="dependencies\css\style.css"/> -->
+<link rel="stylesheet" type="text/css" href="https://sites.google.com/site/mobiuskleinscripthost/resources/css/main.min.css">
+<!-- Application Scripts -->
+<script id='data-hook' async>var Organisms = null;</script>
+<script type="text/javascript" src='https://sites.google.com/site/mobiuskleinscripthost/resources/jsSequenceData.js'></script>
+
+</head>
+<body class="container">
+  <div class='row clearfix' >
+    <div id='header'>
+      <h1>Variant Viewer</h1>
+  
+    <div id='organisms-container'>
+      <b>Select an organism:</b></br>
+      <select class='form-control' id="organisms">
+      </select>
+    </div>
+  </div>
+  <div id='status'></div>
+
+  </div>
+<div class='row'>
+  <div id='entry-list-container' class='col-md-3'>
+    <b>Genes with Variants</b>
+    <input id="gene-filter-input" class='form-control' type='text' placeholder='Type gene descriptors here'>
+    <div id='entry-list'>
+    </div>
+  </div>
+  <div id='core-content' class='col-md-9 tab-content'>
+    <ul id='tabber' class="nav nav-tabs">
+      <li class='active'><a id='sequence-tab' href="#sequence-container" data-toggle="tab">Sequence</a></li>
+      <li><a id='genbank-tab' href="#genbank-container" data-toggle='tab'>Genbank Annotations</a></li>
+      <li><a id='snp-tab' href="#snp-container" data-toggle="tab">SNP List</a></li>
+      <li><a id='blast-tab' href="#blast-hits-container" data-toggle="tab">Blast Hits</a></li>
+    </ul>
+    <div id='sequence-container' class='tab-pane active'>
+    </div>
+    <div id='snp-container' class='tab-pane'>
+      <table id='snp-table' class='annotation-display-table table'>
+      </table>
+    </div>
+    <div id='genbank-container' class='tab-pane'>
+      <div id="comments-container" >
+      </div>
+      <table id='genbank-region-annotations' class='annotation-display-table table'>
+      </table>
+    </div>
+    <div id="blast-hits-container" class='tab-pane'>
+      <table id='blast-hit-annotations' class='annotation-display-table table'>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+</div>
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style='display:none;'>
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
