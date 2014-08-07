@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GENEPOP</title>
+<style>
+.genepop-population-container{
+    clear: both;
+}
+
+.genepop-sample-column{
+    float: left;
+    resize: none;
+    overflow: hidden;
+    width: 15em;
+    border: gray 1px solid;
+    border-collapse: collapse;   
+    padding: 1px;
+    margin-bottom: 3px;
+}
+
+.genepop-locus-column{
+    float: left;
+    resize: none;
+    overflow: hidden;
+    width: 6em;
+    border: gray 1px solid;
+    border-collapse: collapse;
+    padding: 1px;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+hr {
+    margin: 3px;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+  content:attr(data-placeholder);
+  color:grey;
+  font-style:italic;
+}
+
+.genepop-formatter-container{
+    clear: both;
+    overflow: none;
+    overflow-y: scroll;
+    max-height: 650px;
+}
+
+span.error{
+    background-color: red;
+}
+
+</style>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script type="text/javascript" src="https://sites.google.com/site/mobiuskleinscripthost/resources/js/FileSaver.js?attredirects=0&d=1"></script>
+    <script type="text/javascript">
+
+//Constants
+DEFAULT_ALLELE_LENGTH = 6
+ENUM_SAMPLE = 0
+SAMPLE_COL_WIDTH = 30
+ENUM_LOCUS = 1
+LOCUS_COL_WIDTH = 8
+
+COL_TYPES = ['genepop-sample-column', 'genepop-locus-column']
+
+//Taken from the MDN Textarea page
+function autoGrow (oField) {
+  if (oField.scrollHeight > oField.clientHeight) {
+    oField.style.height = oField.scrollHeight + "px";
+  }
+}
+
+function growStr(str, len){
+    var incStr = str;
+    while(str.length < len){
+        str += incStr;
+    }
+    return str
+}
+
+function tb(){
+    var tag = $("<div></div>").prop("contentEditable", true);
+    return tag
+}
+var range, selection
+function setCaret(element) {
+    var doc = document
+    if (doc.body.createTextRange) { //ms
+        range = doc.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) { //all others
+        selection = window.getSelection();        
+        range = doc.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        selection.collapseToEnd(range)
+    }
+}
+
+function GenePopFormatter(opts){
+    var self = this
+    this.opts = opts;
+    this.alleleLength = opts.alleleLength || DEFAULT_ALLELE_LENGTH
+    this.opts.alleleLength = this.alleleLength;
+    this.loci = []
+    this.populations = []
+    this.contentContainer = $("<div></div>").addClass("genepop-formatter-container")
+    this.header = $("<div></div>").addClass("genepop-formatter-headers")
+    this.header.append(
+        $("<button>Add Population</button>").click(function(e){
+            self.addPopulation()
+        })).append(
+        $("<button>Add Locus</button>").click(function(e){
+            self.addLocus()
+        })).append(
+        $("<button>Save</button>").click(function(e){
+            var content = self.toGenePopFormat()
+            var blob = new Blob([content], {type: "text/plain;charset=utf-8"})
+            saveAs(blob, "data.genepop")
+        })
+        )
+    this.columnHeaders = $("<div></div>").addClass("genepop-formatter-column-headers")
+    this.columnHeaders.append(
+        tb().addClass("genepop-sample-column").html("<b>Sample IDS</b>").prop("contentEditable", false)
+    )
+    this.container = $(opts.container || "body") 
+    this.container.append(this.header)
+    this.container.append(this.columnHeaders)
+    this.container.append(this.contentContainer)    
+}
+
+function Population(containerTag, opts){
+    this.opts = opts;
+    this.samples = []
+    this.locusData = []
+    this.container = containerTag
+    containerTag.append("<hr/>")
+}
+
+function columnModifiedSanitizer(e){
+    autoGrow(this)
+    var text = this.innerHTML
+    if(text.indexOf(",") > 0){            
+        var replaced = text.replace(",", "_")
+        var caret = getSelection()        
+        this.innerHTML = replaced;
+        setCaret(this)
+    }
+    if($(this).data("colType") == ENUM_LOCUS){
+        var alleleLength = $(this).data("alleleLength")
+        var content = this.innerText.split('\n')
+        var cleanedContent = []
+        for(var i = 0; i < content.length; i++){
+            var line = content[i];
+            var outLine = line
+            if(line == "") continue
+            else if(!/^[0-9]+$/.test(line)){
+                outLine = growStr("0", alleleLength)
+            } 
+            else if(line.length != alleleLength){
+                outLine = "<span class='error'>" + line + '</span>'
+            }
+            cleanedContent.push(outLine)
+        }
+        this.innerHTML = cleanedContent.join("<br/>");
+        setCaret(this)
+    } else {
+        this.innerHTML = _.map(this.innerText.split('\n'), function(t){return "<span>" + t + "</span>"}).join("<br/>")
+        setCaret(this)
+    }
+}
+
+Population.prototype.addColumn = function(colType, opts){
+    opts = opts || {}
+    var column = tb().addClass(COL_TYPES[colType]);
+    column.data("colType", colType).data('alleleLength', opts.alleleLength || DEFAULT_ALLELE_LENGTH)
+    //Event Handler for modifications
+    column.keyup(columnModifiedSanitizer).on("paste", columnModifiedSanitizer)
+    this.container.append(column)  
+}
+
+GenePopFormatter.prototype.addPopulation = function() {
+    var popContainer = $("<div></div>").addClass("genepop-population-container")
+    this.contentContainer.append(popContainer)
+    var pop = new Population(popContainer, this.opts);
+    this.populations.push(pop);
+    pop.addColumn(ENUM_SAMPLE)
+    for(var loc in this.loci){
+        pop.addColumn(ENUM_LOCUS, pop.opts)
+    }
+};
+
+GenePopFormatter.prototype.addLocus = function(){
+    this.columnHeaders.append(
+        tb().addClass("genepop-locus-column").attr("data-placeholder", "Locus Name")
+    )
+    this.loci.push(0);
+    _.forEach(this.populations, function(pop){
+        console.log(pop);
+        pop.addColumn(ENUM_LOCUS, pop.opts)
+    })
+}
+
+GenePopFormatter.prototype.toGenePopFormat = function(){
+    var content = "----\n"
+    content += _.map(this.columnHeaders.find('.'+COL_TYPES[ENUM_LOCUS]), function(loc){
+        return loc.innerText
+    }).join("\n") + "\n"
+    for(var i = 0; i < this.populations.length; i++){
+        var pop = this.populations[i]
+        content += pop.toGenePopFormat()
+
+    }
+    return content
+}
+
+Population.prototype.toGenePopFormat = function(){
+    this.samples = this.container.find('.'+COL_TYPES[ENUM_SAMPLE])[0].innerText.split("\n");
+    this.locusData = _.map(this.container.find('.'+COL_TYPES[ENUM_LOCUS]), function(col){
+        return col.innerText.split("\n")
+    })
+    var content = "POP\n";
+    for(var i = 0; i < this.samples.length; i++){
+        if(this.samples[i] == "") continue
+        var line = this.samples[i] + ", " + _.pluck(this.locusData, i).join(" ")
+        content += line + "\n";
+    }
+    return content;
+}
+
+var formatter = null;
+$(function(){
+    formatter = new GenePopFormatter({})
+formatter.addPopulation()
+formatter.addLocus()
+})
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
