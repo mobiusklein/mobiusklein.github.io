@@ -26,10 +26,10 @@ Bacteria expend metabolic resources to move, the greater the movement rate, the 
 <iframe id='simulation' src="http://mobiusklein.github.io/Dynamic-Spatial-Evolution/"></iframe>
 <script type="text/javascript">
     //Pull the arena simulator and LoDash into this window
-    window.onload(function(){
+    document.getElementById('simulation').onload = function(){
         window.Arena = document.getElementById('simulation').contentWindow.arena
         window._ = document.getElementById('simulation').contentWindow._
-    })
+    }
 
 </script>
 </body>
