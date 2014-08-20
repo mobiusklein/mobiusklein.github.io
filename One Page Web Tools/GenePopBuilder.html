@@ -13,7 +13,7 @@
     overflow: hidden;
     width: 15em;
     border: gray 1px solid;
-    border-collapse: collapse;   
+    border-collapse: collapse;
     padding: 1px;
     margin-bottom: 3px;
 }
@@ -66,6 +66,8 @@ LOCUS_COL_WIDTH = 8
 
 COL_TYPES = ['genepop-sample-column', 'genepop-locus-column']
 
+newLine = navigator.platform === "Win32" ? "\r\n" : "\n"
+
 //Taken from the MDN Textarea page
 function autoGrow (oField) {
   if (oField.scrollHeight > oField.clientHeight) {
@@ -93,7 +95,7 @@ function setCaret(element) {
         range.moveToElementText(element);
         range.select();
     } else if (window.getSelection) { //all others
-        selection = window.getSelection();        
+        selection = window.getSelection();
         range = doc.createRange();
         range.selectNodeContents(element);
         selection.removeAllRanges();
@@ -120,18 +122,36 @@ function GenePopFormatter(opts){
         })).append(
         $("<button>Save</button>").click(function(e){
             var content = self.toGenePopFormat()
-            var blob = new Blob([content], {type: "text/plain;charset=utf-8"})
-            saveAs(blob, "data.genepop")
+            try{
+                var blob = new Blob([content], {type: "text/plain;charset=utf-8"})
+                saveAs(blob, "data.genepop")
+            } catch(ex) {
+                try{
+                    console.log(ex)
+                    var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(contet)
+                    var tag = $("<a></a>").attr("href", uriContent).attr("download", "data.genpop")
+                    console.log("Attempting HTML5 Anchor URI Download", tag)
+                    tag.click()
+                } catch(uriEx) {
+                    console.log(uriEx)
+                    newWindow = window.open(uriContent)
+                    if(newWindow.document.body.innerText === ""){
+                        newWindow.document.body.innerText = content
+                    }
+                    alert("Your browser did not like any modern technique for downloading files. If you see this message and a new window appeared, your GENEPOP file is the contents of that window. Select it all with Ctrl+A and copy and paste it into a text file.")
+                }
+            }
+
         })
         )
     this.columnHeaders = $("<div></div>").addClass("genepop-formatter-column-headers")
     this.columnHeaders.append(
         tb().addClass("genepop-sample-column").html("<b>Sample IDS</b>").prop("contentEditable", false)
     )
-    this.container = $(opts.container || "body") 
+    this.container = $(opts.container || "body")
     this.container.append(this.header)
     this.container.append(this.columnHeaders)
-    this.container.append(this.contentContainer)    
+    this.container.append(this.contentContainer)
 }
 
 function Population(containerTag, opts){
@@ -145,9 +165,9 @@ function Population(containerTag, opts){
 function columnModifiedSanitizer(e){
     autoGrow(this)
     var text = this.innerHTML
-    if(text.indexOf(",") > 0){            
+    if(text.indexOf(",") > 0){
         var replaced = text.replace(",", "_")
-        var caret = getSelection()        
+        var caret = getSelection()
         this.innerHTML = replaced;
         setCaret(this)
     }
@@ -161,7 +181,7 @@ function columnModifiedSanitizer(e){
             if(line == "") continue
             else if(!/^[0-9]+$/.test(line)){
                 outLine = growStr("0", alleleLength)
-            } 
+            }
             else if(line.length != alleleLength){
                 outLine = "<span class='error'>" + line + '</span>'
             }
@@ -181,7 +201,7 @@ Population.prototype.addColumn = function(colType, opts){
     column.data("colType", colType).data('alleleLength', opts.alleleLength || DEFAULT_ALLELE_LENGTH)
     //Event Handler for modifications
     column.keyup(columnModifiedSanitizer).on("paste", columnModifiedSanitizer)
-    this.container.append(column)  
+    this.container.append(column)
 }
 
 GenePopFormatter.prototype.addPopulation = function() {
@@ -207,10 +227,10 @@ GenePopFormatter.prototype.addLocus = function(){
 }
 
 GenePopFormatter.prototype.toGenePopFormat = function(){
-    var content = "----\n"
+    var content = "----" + newLine
     content += _.map(this.columnHeaders.find('.'+COL_TYPES[ENUM_LOCUS]), function(loc){
         return loc.innerText
-    }).join("\n") + "\n"
+    }).join(newLine) + newLine
     for(var i = 0; i < this.populations.length; i++){
         var pop = this.populations[i]
         content += pop.toGenePopFormat()
@@ -224,11 +244,11 @@ Population.prototype.toGenePopFormat = function(){
     this.locusData = _.map(this.container.find('.'+COL_TYPES[ENUM_LOCUS]), function(col){
         return col.innerText.split("\n")
     })
-    var content = "POP\n";
+    var content = "POP" + newLine;
     for(var i = 0; i < this.samples.length; i++){
         if(this.samples[i] == "") continue
         var line = this.samples[i] + ", " + _.pluck(this.locusData, i).join(" ")
-        content += line + "\n";
+        content += line + newLine;
     }
     return content;
 }

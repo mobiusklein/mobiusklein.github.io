@@ -3,5 +3,8 @@
         "Visualize Influenza Microarray Combinatorics",
         "Force Directed Regulon",
         "SequenceView"
+    ],
+    "One Page Web Tools": [
+        "GenePopBuilder"
     ]
 }

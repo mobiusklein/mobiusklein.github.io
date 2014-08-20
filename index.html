@@ -17,7 +17,7 @@ $(function(){
                 var projects = $('<ul></ul>')
                 for(var j in obj[i]){
                     console.log("Project", j)
-                    projects.append($("<li></li>").html('<a href="' + encodeURI(i) + '/' + encodeURI(obj[i][j]) + '">' + obj[i][j] + '</a>'))
+                    projects.append($("<li></li>").html('<a href="' + encodeURI(i) + '/' + encodeURI(obj[i][j]) + '.html">' + obj[i][j] + '</a>'))
                 }
                 category.append(projects)
                 projectList.append(category)
@@ -34,7 +34,7 @@ $(function(){
     </ol>
 </div>
 <div id='content' style='clear:both;'>
-    
+
 </div>
 <div>
 </div>
