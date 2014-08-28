@@ -1,0 +1,195 @@
+#header-wrapper {
+  display: table;
+  width: 100%;
+}
+#header-wrapper div {
+  display: table-cell;
+  padding: 0px 25px 0px 25px;
+}
+#header-title {
+  text-align: center;
+}
+#save-csv-btn {
+  float: left;
+}
+#help-btn {
+  float: right;
+}
+.popover {
+  max-width: 400px !important;
+}
+.help-article {
+  max-height: 500px !important;
+  overflow-y: scroll;
+}
+.help-article table {
+  text-align: center !important;
+}
+.help-article table th {
+  text-align: center !important;
+}
+.matched-ions-cell {
+  vertical-align: middle !important;
+  margin: 0px !important;
+}
+.glycopeptide-identifier {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+.glycopeptide-identifier .ngCellText {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+.stacked-ions-cell {
+  vertical-align: middle !important;
+  margin: 0px !important;
+}
+.stacked-ions-cell > div {
+  height: 90px !important;
+  overflow-y: scroll;
+}
+.ngCell.stacked-ions-cell-grid {
+  vertical-align: middle !important;
+  margin: 0px;
+  overflow-y: scroll !important;
+}
+.fragment-ion-tag {
+  background-color: lightgrey;
+  border-radius: 3px;
+  font-size: 9.5px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+.gridStyle {
+  margin: 2px;
+  border: 1px solid #d4d4d4;
+  width: 100%;
+  height: 800px;
+}
+.ngRow.selected * {
+  background-color: #57c889 !important;
+  color: white;
+}
+.c0 {
+  background-color: #ffedcc;
+}
+.c1 {
+  background-color: #b3e0f2;
+}
+.c2 {
+  background-color: #b3ffb3;
+}
+.c3 {
+  background-color: #ffffcc;
+}
+.c4 {
+  background-color: #ffe5e5;
+}
+.c5 {
+  background-color: #ffffff;
+}
+#grid-controls {
+  display: table;
+  width: 100%;
+}
+#grid-controls div {
+  display: table-row;
+}
+#grid-controls div div {
+  display: table-cell;
+  width: 50%;
+  text-align: left;
+}
+#filtrex-control {
+  padding: 25px;
+}
+.filtrex-ctrl-anchor {
+  margin-left: 15px;
+}
+#filtrex-usage-anchor {
+  margin-left: 15px;
+}
+#filterable-names-anchor {
+  margin-left: 15px;
+}
+#filtrex-control-input {
+  width: 800px;
+  clear: both;
+  float: none;
+  border-radius: 5px;
+}
+.ambiguity-peptide-sequences-container {
+  margin: 25px;
+  border: lightgrey 1px solid;
+  border-radius: 3px;
+}
+.ambiguity-peptide-attributes {
+  width: 50%;
+  padding: 5px;
+  text-align: center;
+}
+.ambiguity-peptide-attributes p {
+  font-weight: 900;
+}
+.plot-grouping-fn-selector-container select {
+  margin: 15px;
+  padding: 5px;
+  border: 1px grey solid;
+  border-radius: 5px;
+}
+.ambiguity-peptide-sequences-table th,
+.ambiguity-peptide-sequences-table td {
+  text-align: center;
+}
+.mod-string {
+  font-weight: 900;
+}
+.protein-sequence-view-container {
+  margin-left: 2%;
+}
+#tooltip {
+  position: absolute;
+  z-index: 3000;
+  border: 1px solid #111;
+  background-color: #eee;
+  padding: 5px;
+  opacity: 0.85;
+}
+#tooltip h3,
+#tooltip div {
+  margin: 0;
+}
+/*Modal Styles*/
+.modal {
+  display: block;
+}
+.modal-body:before,
+.modal-body:after {
+  display: table;
+  content: " ";
+}
+.modal-header:before,
+.modal-header:after {
+  display: table;
+  content: " ";
+}
+table.glycan-composition-frequency-table {
+  text-align: center;
+}
+table.glycan-composition-frequency-table td,
+table.glycan-composition-frequency-table th {
+  text-align: center;
+  font-size: 11px;
+}
+table.glycan-composition-frequency-table tr td:first-child {
+  font-weight: 900;
+}
+.help-content {
+  padding: 3px;
+}
+.help-content h5 {
+  font-weight: 900;
+}
+.help-content section {
+  margin: 15px;
+}
