@@ -7,5 +7,9 @@
     ],
     "One Page Web Tools": [
         "GenePopBuilder"
+    ],
+    "Web Tools and Plugins":[
+        "ng-scientific-notation"
     ]
+
 }
