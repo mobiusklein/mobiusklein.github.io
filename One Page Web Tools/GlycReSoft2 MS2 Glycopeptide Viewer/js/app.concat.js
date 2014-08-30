@@ -17,9 +17,13 @@ Array.prototype.mean = function() {
   total = this.sum();
   return total / this.length;
 };
-;
-var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
+if (Number.isInteger == null) {
+  Number.isInteger = function(nVal) {
+    return typeof nVal === "number" && isFinite(nVal) && nVal > -9007199254740992 && nVal < 9007199254740992 && Math.floor(nVal) === nVal;
+  };
+}
+;
 (function() {
   var activateFn, applyFiltrex, filterByFiltrex, filterRules, focusRow, groupingRules, helpText, setGroupBy, updateFiltrexDebounce, watchExternalDataChanges;
   setGroupBy = function(grouping, predictions) {
@@ -151,7 +155,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
     },
     requireIonsWithHexNAc: {
       label: "Require Peptide Backbone Ion Fragmentss with HexNAc Matches",
-      filtrex: "(% Y Ion With HexNAc Coverage + % B Ion With HexNAc Coverage) > 0"
+      filtrex: "(% y Ion With HexNAc Coverage + % b Ion With HexNAc Coverage) > 0"
     }
   };
   groupingRules = {
@@ -247,14 +251,22 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         }
       };
       $scope.buildHeaderSubstituitionDictionary = function() {
-        var BLACK_LIST, column, dictionary, _i, _len, _ref, _ref1;
+        var BLACK_LIST, column, dictionary, _i, _len, _ref;
         dictionary = {};
         dictionary.NAME_MAP = [];
-        BLACK_LIST = ["Peptide Span"];
+        BLACK_LIST = {
+          "Peptide Span": true,
+          "b Ions": true,
+          "b Ions With HexNAc": true,
+          "y Ions": true,
+          "y Ions With HexNAc": true,
+          "Stub Ions": true,
+          "Oxonium Ions": true
+        };
         _ref = $scope.gridOptions.columnDefs;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           column = _ref[_i];
-          if (!(_ref1 = column.displayName, __indexOf.call(BLACK_LIST, _ref1) >= 0)) {
+          if (!BLACK_LIST[column.displayName]) {
             dictionary.NAME_MAP.push(column.displayName);
             dictionary[column.displayName.toLowerCase()] = column.field;
           }
@@ -269,14 +281,14 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         dictionary.NAME_MAP.push("Oxonium Ion Count");
         dictionary["Stub Ion Count".toLowerCase()] = "numStubs";
         dictionary.NAME_MAP.push("Stub Ion Count");
-        dictionary["% Y Ion Coverage".toLowerCase()] = "percent_y_ion_coverage";
-        dictionary.NAME_MAP.push("% Y Ion Coverage");
-        dictionary["% B Ion Coverage".toLowerCase()] = "percent_b_ion_coverage";
-        dictionary.NAME_MAP.push("% B Ion Coverage");
-        dictionary["% Y Ion With HexNAc Coverage".toLowerCase()] = "percent_y_ion_with_HexNAc_coverage";
+        dictionary["% y Ion Coverage".toLowerCase()] = "percent_y_ion_coverage";
+        dictionary.NAME_MAP.push("% y Ion Coverage");
+        dictionary["% b Ion Coverage".toLowerCase()] = "percent_b_ion_coverage";
+        dictionary.NAME_MAP.push("% b Ion Coverage");
+        dictionary["% y Ion With HexNAc Coverage".toLowerCase()] = "percent_y_ion_with_HexNAc_coverage";
         dictionary.NAME_MAP.push("% Y Ion With HexNAc Coverage");
-        dictionary["% B Ion With HexNAc Coverage".toLowerCase()] = "percent_b_ion_with_HexNAc_coverage";
-        dictionary.NAME_MAP.push("% B Ion With HexNAc Coverage");
+        dictionary["% b Ion With HexNAc Coverage".toLowerCase()] = "percent_b_ion_with_HexNAc_coverage";
+        dictionary.NAME_MAP.push("% b Ion With HexNAc Coverage");
         return dictionary;
       };
       $scope.gridOptions = {
@@ -289,6 +301,12 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
         rowHeight: 90,
         columnDefs: [
           {
+            field: 'scan_id',
+            width: 90,
+            pinned: true,
+            displayName: "Scan ID",
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)}}</div></div>'
+          }, {
             field: 'MS2_Score',
             width: 90,
             pinned: true,
@@ -355,28 +373,28 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
           }, {
             field: 'b_ion_coverage',
             width: 340,
-            displayName: "B Ions",
+            displayName: "b Ions",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
             cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
           }, {
             field: 'y_ion_coverage',
             width: 340,
-            displayName: "Y Ions",
+            displayName: "y Ions",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
             cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
           }, {
             field: 'b_ions_with_HexNAc',
             width: 340,
-            displayName: "B Ions with HexNAc",
+            displayName: "b Ions with HexNAc",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
             cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_with_HexNAc_coverage * 100 |number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
           }, {
             field: 'y_ions_with_HexNAc',
             width: 340,
-            displayName: "Y Ions with HexNAc",
+            displayName: "y Ions with HexNAc",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
             cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_with_HexNAc_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
@@ -700,7 +718,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
         summary: glycanCompositionContent,
         items: [],
         postLoadFn: function() {
-          angular.element('.frequency-plot-container').highcharts({
+          return angular.element('.frequency-plot-container').highcharts({
             data: {
               table: angular.element('.glycan-composition-frequency-table')[0]
             },
@@ -729,8 +747,6 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
               enabled: false
             }
           });
-          console.log(window.TESTX, "charted");
-          return console.log($('.frequency-plot-container'));
         }
       };
     };
@@ -762,6 +778,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           feature.featureLabel = label;
           feature.featureTypeLabel = label;
           feature.featureId = label + "-" + (index + startSite);
+          feature.additionalTooltipContent = "Scan ID: " + glycoform.scan_id + "<br/>";
           if (!(label in heightLayerMap)) {
             _layerCounter += _layerIncrement;
             heightLayerMap[label] = _layerCounter;
@@ -800,7 +817,6 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           feature.stroke = colorService.getColor("Peptide");
           feature.featureStart = glycoform.startAA;
           feature.featureEnd = glycoform.endAA;
-          feature.text = glycoform.Glycopeptide_identifier;
           feature.typeLabel = "Peptide";
           feature.typeCode = "";
           feature.typeCategory = "";
@@ -958,20 +974,23 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
 ;
 angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityPlot", [
   "$window", function($window) {
-    var ambiguityPlotTemplater, ms1MassGroupingFn, positionGroupingFn, scalingDownFn, scalingUpFn, updatePlot;
+    var ambiguityPlotTemplater, genericGroupingFn, scalingDownFn, scalingUpFn, updatePlot;
     scalingDownFn = function(value) {
       return Math.log(value);
     };
     scalingUpFn = function(value) {
       return Math.exp(value);
     };
-    ambiguityPlotTemplater = function(scope, seriesData, xAxisTitle, yAxisTitle) {
+    ambiguityPlotTemplater = function(scope, seriesData, xAxisTitle, yAxisTitle, plotType) {
       var ambiguityPlotTemplateImpl, infitesimal;
+      if (plotType == null) {
+        plotType = 'bubble';
+      }
       infitesimal = 1 / (Math.pow(1000, 1000));
       return ambiguityPlotTemplateImpl = {
         chart: {
           height: $window.innerHeight * 0.6,
-          type: "bubble",
+          type: plotType,
           zoomType: 'xy'
         },
         plotOptions: {
@@ -987,7 +1006,6 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
                   scope.$apply(function() {
                     return scope.describedPredictions = _.pluck(point.series.points, "data");
                   });
-                  console.log(this);
                   chart.xAxis[0].setExtremes(Math.min.apply(null, xs) * (1 - infitesimal), Math.max.apply(null, xs) * (1 + infitesimal));
                   chart.yAxis[0].setExtremes(Math.min.apply(null, ys) * (1 - infitesimal), Math.max.apply(null, ys) * (1 + infitesimal));
                   return chart.showResetZoom();
@@ -1013,11 +1031,17 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
           formatter: function() {
             var contents, point;
             point = this.point;
-            contents = " MS1 Score: <b>" + point.x + "</b><br/> Mass: <b>" + (scalingUpFn(point.z)) + "</b><br/> MS2 Score: <b>" + point.y + "</b>(ME: <i>" + point.MS2_ScoreMeanError + "</i>)<br/> Number of Matches: <b>" + point.series.data.length + "</b><br/>";
+            contents = "" + point.titles.x + ": <b>" + point.x + "</b><br/>";
+            if (point.titles.z !== "None" && (point.titles.z != null)) {
+              contents += "" + point.titles.z + ": <b>" + point.z + "</b><br/>";
+            }
+            if (point.titles.y !== "" && (point.titles.y != null)) {
+              contents += "" + point.titles.y + ": <b>" + point.y + "</b><br/>";
+            }
+            contents += "Number of Matches: <b>" + point.series.data.length + "</b><br/>";
             return contents;
           },
           headerFormat: "<span style=\"color:{series.color}\">●</span> {series.name}</span><br/>",
-          pointFormat: " MS1 Score: <b>{point.x}</b>" + "<br/>Mass: <b>{point.z}</b><br/>MS2 Score: <b>{point.y}</b>(ME: <i>{point.MS2_ScoreMeanError}</i>)<br/> Number of Matches: <b>{series.data.length}</b><br/>",
           positioner: function(boxWidth, boxHeight, point) {
             var ttAnchor;
             ttAnchor = {
@@ -1048,168 +1072,220 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
         series: seriesData
       };
     };
-    ms1MassGroupingFn = function(predictions) {
-      var ionMassMS1Groups, ionMassMS1Series, ionPoints, notAmbiguous, p, perfectAmbiguous;
-      ionPoints = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = predictions.length; _i < _len; _i++) {
-          p = predictions[_i];
-          _results.push({
-            x: p.MS1_Score,
-            y: p.MS2_Score,
-            z: scalingDownFn(p.Obs_Mass),
-            data: p
-          });
+    genericGroupingFn = function(xAxis, yAxis, zAxis, groupingName) {
+      var fn, xAxisGetter, yAxisGetter, zAxisGetter;
+      if (groupingName == null) {
+        groupingName = "";
+      }
+      if (groupingName === "") {
+        groupingName = xAxis.name;
+        if ((zAxis.name != null) && zAxis.name !== "") {
+          groupingName += "/" + zAxis.name;
         }
-        return _results;
-      })();
-      ionMassMS1Groups = _.groupBy(ionPoints, function(pred) {
-        return pred.x.toFixed(3) + "-" + pred.z.toFixed(3);
-      });
-      ionMassMS1Series = [];
-      notAmbiguous = [];
-      perfectAmbiguous = [];
-      _.forEach(ionMassMS1Groups, function(group, id) {
-        var i, mean, meanError, s, scoreRange, _i, _j, _len, _ref;
-        if (group.length === 1) {
-          _.forEach(group, function(pred) {
-            return pred.MS2_ScoreMeanError = 0;
-          });
-          return notAmbiguous.push({
-            data: group,
-            name: "MS1/Mass " + id
-          });
-        } else {
-          scoreRange = _.pluck(group, "y");
-          mean = 0;
-          for (_i = 0, _len = scoreRange.length; _i < _len; _i++) {
-            s = scoreRange[_i];
-            mean += s;
-          }
-          mean /= scoreRange.length;
-          meanError = (function() {
-            var _j, _len1, _results;
-            _results = [];
-            for (_j = 0, _len1 = scoreRange.length; _j < _len1; _j++) {
-              s = scoreRange[_j];
-              _results.push(s - mean);
-            }
-            return _results;
-          })();
-          for (i = _j = 0, _ref = group.length; 0 <= _ref ? _j < _ref : _j > _ref; i = 0 <= _ref ? ++_j : --_j) {
-            group[i].MS2_ScoreMeanError = meanError[i] === 0 ? 0 : meanError[i].toFixed(4);
-          }
-          return ionMassMS1Series.push({
-            data: group,
-            name: "MS1/Mass " + id
-          });
-        }
-      });
-      return {
-        ionSeries: ionMassMS1Series,
-        notAmbiguous: notAmbiguous
+      }
+      xAxisGetter = function(p) {
+        return p[xAxis.getter];
       };
-    };
-    positionGroupingFn = function(predictions) {
-      var ionPoints, ionStartLengthGroups, ionStartLengthSeries, notAmbiguous, p, perfectAmbiguous;
-      ionPoints = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = predictions.length; _i < _len; _i++) {
-          p = predictions[_i];
-          _results.push({
-            x: p.startAA,
-            y: p.MS2_Score,
-            z: p.endAA - p.startAA,
-            data: p
-          });
-        }
-        return _results;
-      })();
-      ionStartLengthGroups = _.groupBy(ionPoints, function(pred) {
-        return pred.x.toFixed(3) + "-" + pred.z.toFixed(3);
-      });
-      ionStartLengthSeries = [];
-      notAmbiguous = [];
-      perfectAmbiguous = [];
-      _.forEach(ionStartLengthGroups, function(group, id) {
-        var i, mean, meanError, s, scoreRange, _i, _j, _len, _ref;
-        if (group.length === 1) {
-          _.forEach(group, function(pred) {
-            return pred.MS2_ScoreMeanError = 0;
-          });
-          return ionStartLengthSeries.push({
-            data: group,
-            name: "Start AA/Length  " + id
-          });
-        } else {
-          scoreRange = _.pluck(group, "y");
-          mean = 0;
-          for (_i = 0, _len = scoreRange.length; _i < _len; _i++) {
-            s = scoreRange[_i];
-            mean += s;
-          }
-          mean /= scoreRange.length;
-          meanError = (function() {
-            var _j, _len1, _results;
-            _results = [];
-            for (_j = 0, _len1 = scoreRange.length; _j < _len1; _j++) {
-              s = scoreRange[_j];
-              _results.push(s - mean);
-            }
-            return _results;
-          })();
-          for (i = _j = 0, _ref = group.length; 0 <= _ref ? _j < _ref : _j > _ref; i = 0 <= _ref ? ++_j : --_j) {
-            group[i].MS2_ScoreMeanError = meanError[i] === 0 ? 0 : meanError[i].toFixed(4);
-          }
-          return ionStartLengthSeries.push({
-            data: group,
-            name: "Start AA/Length " + id
-          });
-        }
-      });
-      return {
-        ionSeries: ionStartLengthSeries,
-        notAmbiguous: notAmbiguous
+      if (typeof xAxis.getter === "function") {
+        xAxisGetter = function(p) {
+          return xAxis.getter(p);
+        };
+      }
+      yAxisGetter = function(p) {
+        return p[yAxis.getter];
       };
+      if (typeof yAxis.getter === "function") {
+        yAxisGetter = function(p) {
+          return yAxis.getter(p);
+        };
+      }
+      zAxisGetter = function(p) {
+        return p[zAxis.getter];
+      };
+      if (typeof zAxis.getter === "function") {
+        zAxisGetter = function(p) {
+          return zAxis.getter(p);
+        };
+      }
+      fn = function(predictions) {
+        var ionGroupings, ionPoints, ionSeries, notAmbiguous, p, perfectAmbiguous;
+        ionPoints = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = predictions.length; _i < _len; _i++) {
+            p = predictions[_i];
+            _results.push({
+              x: xAxisGetter(p),
+              y: yAxisGetter(p),
+              z: zAxisGetter(p),
+              data: p,
+              titles: {
+                x: xAxis.name,
+                y: yAxis.name,
+                z: zAxis.name
+              }
+            });
+          }
+          return _results;
+        })();
+        ionGroupings = _.groupBy(ionPoints, function(pred) {
+          var groupId, xVal, zVal;
+          xVal = pred.x;
+          if (typeof xVal === "number" && !Number.isInteger(xVal)) {
+            xVal = xVal.toFixed(3);
+          }
+          zVal = pred.z;
+          if (typeof zVal === "number" && !Number.isInteger(zVal)) {
+            zVal = zVal.toFixed(3);
+          }
+          groupId = xVal;
+          if (zVal != null) {
+            groupId += '-' + zVal;
+          }
+          return groupId;
+        });
+        ionSeries = [];
+        notAmbiguous = [];
+        perfectAmbiguous = [];
+        _.forEach(ionGroupings, function(group, id) {
+          if (group.length === 1) {
+            return notAmbiguous.push({
+              data: group,
+              name: groupingName + " " + id
+            });
+          } else {
+            return ionSeries.push({
+              data: group,
+              name: groupingName + " " + id
+            });
+          }
+        });
+        return {
+          ionSeries: ionSeries,
+          notAmbiguous: notAmbiguous
+        };
+      };
+      return fn;
     };
     updatePlot = function(predictions, scope, element) {
-      var chart, groupParams, ionSeries, notAmbiguous, plotOptions, xAxisTitle, yAxisTitle, _ref;
+      var chart, groupParams, ionSeries, notAmbiguous, plotOptions, plotType, xAxisTitle, yAxisTitle, _ref;
       groupParams = scope.grouping.groupingFnKey;
-      console.log("Grouping Parameters: ", groupParams);
       scope.seriesData = groupParams.groupingFn(predictions);
-      console.log("Series Data: ", scope.seriesData);
       scope.describedPredictions = [];
       _ref = scope.seriesData, ionSeries = _ref.ionSeries, notAmbiguous = _ref.notAmbiguous;
-      plotOptions = ambiguityPlotTemplater(scope, ionSeries, xAxisTitle = groupParams.xAxisTitle, yAxisTitle = groupParams.yAxisTitle);
-      console.log(plotOptions);
+      if (!scope.hideUnambiguous) {
+        ionSeries = ionSeries.concat(notAmbiguous);
+      }
+      plotOptions = ambiguityPlotTemplater(scope, ionSeries, xAxisTitle = groupParams.xAxisTitle, yAxisTitle = groupParams.yAxisTitle, plotType = groupParams.plotType);
       chart = element.find(".ambiguity-plot-container");
       return chart.highcharts(plotOptions);
     };
     return {
       restrict: "AE",
-      template: "<div class='amiguity-container'> <div class='plot-grouping-fn-selector-container'> <select class='plot-grouping-fn-selector-box' ng-model='grouping.groupingFnKey' ng-options='key for (key, value) in grouping.groupingsOptions' ng-change='requestPredictionsUpdate()'> </select> </div> <div class='ambiguity-plot-container'></div> <div class='ambiguity-peptide-sequences-container' ng-if='describedPredictions.length > 0'> <div class='ambiguity-peptide-attributes-container clearfix'> <div class='pull-left ambiguity-peptide-attributes'> <p>MS2 Score Range: {{describedMS2Min}} - {{describedMS2Max}}</p> <p>Peptide Region: {{describedPredictions[0].startAA}} - {{describedPredictions[0].endAA}}</p> </div> <div class='pull-left ambiguity-peptide-attributes'> <p>Peptide Sequence: {{describedPredictions[0].Peptide}}</p> <p>Distinct Glycan Count: {{keys(_.groupBy(describedPredictions, 'Glycan')).length}} </div> </div> <table class='table table-striped table-compact ambiguity-peptide-sequences-table'> <tr> <th>Glycopeptide Identifier</th> <th>Peptide Coverage</th> <th># Stub Ions</th> <th>B | Y Ions Coverage (+HexNAc)</th> <th>MS2 Score</th> </tr> <tr ng-repeat='match in describedPredictions | orderBy:[\"MS2_Score\",\"Glycan\",\"numStubs\"]:true'> <td ng-bind-html='match.Glycopeptide_identifier | highlightModifications'></td> <td>{{match.meanCoverage | number:4}}</td> <td>{{match.Stub_ions.length}}</td> <td>{{match.percent_b_ion_coverage * 100|number:1}}%({{match.percent_b_ion_with_HexNAc_coverage * 100|number:1}}%) | {{match.percent_y_ion_coverage * 100|number:1}}%({{match.percent_y_ion_with_HexNAc_coverage * 100|number:1}}%) </td> <td>{{match.MS2_Score}}</td> </tr> </table> </div> </div>",
+      scope: {
+        predictions: '=',
+        headerSubstituitionDictionary: '=headers'
+      },
+      template: "<div class='amiguity-container'> <div class='plot-grouping-fn-selector-container'> Plot Function <select class='plot-grouping-fn-selector-box' ng-model='grouping.groupingFnKey' ng-options='key for (key, value) in grouping.groupingsOptions' ng-change='requestPredictionsUpdate()'> </select> <label>Hide Unambiguous <input type='checkbox' ng-model='ambiguityPlotParams.hideUnambiguous'/></label> <a ng-click='ambiguityPlotParams.showCustomPlotter=!ambiguityPlotParams.showCustomPlotter'>Make Your Own</a> <span class='custom-fn-menu' ng-show='ambiguityPlotParams.showCustomPlotter'> <button class='btn btn-primary' ng-click='customPlot()'>Plot</button> </span> <div ng-show='ambiguityPlotParams.showCustomPlotter' class='plot-grouping-fn-selector-container custom-fn-menu'> X Axis <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.x' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP'> </select> Y Axis <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.y' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP'> </select> Z Axis (Optional) <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.z' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP.concat(\"None\")'> </select> </div> </div> <div class='ambiguity-plot-container'></div> <div class='ambiguity-peptide-sequences-container' ng-if='describedPredictions.length > 0'> <div class='ambiguity-peptide-attributes-container clearfix'> <div class='pull-left ambiguity-peptide-attributes'> <p>MS2 Score Range: {{describedMS2Min}} - {{describedMS2Max}}</p> <p>Amino Acid Regions: {{describedPeptideRegions()}}</p> </div> <div class='pull-left ambiguity-peptide-attributes'> <p>Peptide Sequence: {{describedPredictions[0].Peptide}}</p> <p>Distinct Glycan Count: {{keys(_.groupBy(describedPredictions, 'Glycan')).length}} </div> </div> <table class='table table-striped table-compact ambiguity-peptide-sequences-table'> <tr> <th>Glycopeptide Identifier</th> <th>Peptide Coverage</th> <th># Stub Ions</th> <th>B | Y Ions Coverage (+HexNAc)</th> <th>MS2 Score</th> </tr> <tr ng-repeat='match in describedPredictions | orderBy:[\"MS2_Score\",\"Glycan\",\"numStubs\"]:true'> <td ng-bind-html='match.Glycopeptide_identifier | highlightModifications'></td> <td>{{match.meanCoverage | number:4}}</td> <td>{{match.Stub_ions.length}}</td> <td>{{match.percent_b_ion_coverage * 100|number:1}}%({{match.percent_b_ion_with_HexNAc_coverage * 100|number:1}}%) | {{match.percent_y_ion_coverage * 100|number:1}}%({{match.percent_y_ion_with_HexNAc_coverage * 100|number:1}}%) </td> <td>{{match.MS2_Score}}</td> </tr> </table> </div> </div>",
       link: function(scope, element, attr) {
+        $window.PLOTTING = scope;
         scope.describedPredictions = [];
         scope.describedMS2Min = 0;
         scope.describedMS2Max = 0;
         scope.grouping = {};
         scope.grouping.groupingsOptions = {
           "MS1 Score + Mass": {
-            groupingFn: ms1MassGroupingFn,
+            groupingFn: genericGroupingFn({
+              name: "MS1 Score",
+              getter: "MS1_Score"
+            }, {
+              name: "MS2 Score",
+              getter: "MS2_Score"
+            }, {
+              name: "Observed Mass",
+              getter: "Obs_Mass"
+            }),
             xAxisTitle: "MS1 Score",
-            yAxisTitle: "MS2 Score"
+            yAxisTitle: "MS2 Score",
+            plotType: 'bubble'
           },
           "Start AA + Length": {
-            groupingFn: positionGroupingFn,
+            groupingFn: genericGroupingFn({
+              name: "Start AA",
+              getter: "startAA"
+            }, {
+              name: "MS2 Score",
+              getter: "MS2_Score"
+            }, {
+              name: "Peptide Length",
+              getter: "peptideLens"
+            }),
             xAxisTitle: "Peptide Start Position",
-            yAxisTitle: "MS2 Score"
+            yAxisTitle: "MS2 Score",
+            plotType: 'bubble'
+          },
+          "Scan Number": {
+            groupingFn: genericGroupingFn({
+              name: 'Scan Number',
+              getter: "scan_id"
+            }, {
+              name: 'Mean Peptide Coverage',
+              getter: 'meanCoverage'
+            }, {
+              name: '',
+              getter: function(p) {
+                return null;
+              }
+            }),
+            xAxisTitle: 'Scan Number',
+            yAxisTitle: 'Mean Peptide Coverage',
+            plotType: 'scatter'
           }
         };
         scope._ = _;
         scope.keys = Object.keys;
         scope.grouping.groupingFnKey = scope.grouping.groupingsOptions["MS1 Score + Mass"];
+        scope.ambiguityPlotParams = {
+          showCustomPlotter: false,
+          x: "Scan ID",
+          y: "MS2 Score",
+          z: "None",
+          hideUnambiguous: true
+        };
+        scope.describedPeptideRegions = function() {
+          return Object.keys(_.groupBy(scope.describedPredictions, function(p) {
+            return p.startAA + '-' + p.endAA;
+          })).join('; ');
+        };
+        scope.customPlot = function() {
+          var groupingParams, x, y, z;
+          console.log(scope.ambiguityPlotParams);
+          x = scope.ambiguityPlotParams.x;
+          y = scope.ambiguityPlotParams.y;
+          z = scope.ambiguityPlotParams.z;
+          groupingParams = {
+            groupingFn: genericGroupingFn({
+              name: x,
+              getter: scope.headerSubstituitionDictionary[x.toLowerCase()]
+            }, {
+              name: y,
+              getter: scope.headerSubstituitionDictionary[y.toLowerCase()]
+            }, {
+              name: z,
+              getter: scope.headerSubstituitionDictionary[z.toLowerCase()]
+            }),
+            xAxisTitle: x,
+            yAxisTitle: y,
+            plotType: "bubble"
+          };
+          if (z === "None") {
+            groupingParams.plotType = "scatter";
+          }
+          scope.grouping.groupingsOptions["Custom"] = groupingParams;
+          scope.grouping.groupingFnKey = groupingParams;
+          updatePlot(scope.predictions, scope, element);
+          return true;
+        };
         angular.element($window).bind('resize', function() {
           var chart;
           try {
@@ -1227,16 +1303,11 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
           });
         });
         scope.$on("ambiguityPlot.renderPlot", function(evt, params) {
-          console.log("Received", arguments);
           return updatePlot(scope.predictions, scope, element);
         });
-        return scope.requestPredictionsUpdate = function(opts) {
-          if (opts == null) {
-            opts = {};
-          }
-          console.log("Requesting Updates");
-          return scope.$emit("ambiguityPlot.requestPredictionsUpdate", opts);
-        };
+        return scope.$watch('ambiguityPlotParams.hideUnambiguous', function(newVal, oldVal) {
+          return updatePlot(scope.predictions, scope, element);
+        });
       }
     };
   }
@@ -1330,7 +1401,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("helpMenu",
         return element.click(function() {
           var modalInstance;
           return modalInstance = $modal.open({
-            templateUrl: 'Web/templates/help-text.html',
+            templateUrl: '/Web/templates/help-text.html',
             size: 'lg'
           });
         });
