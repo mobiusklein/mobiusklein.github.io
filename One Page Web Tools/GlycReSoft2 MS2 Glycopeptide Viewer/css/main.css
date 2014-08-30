@@ -643,6 +643,18 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ambiguity-peptide-attributes p {
   font-weight: 900;
 }
+.custom-fn-menu * {
+  margin: 15px;
+}
+.plot-grouping-fn-selector-container {
+  margin-left: 10px;
+}
+.plot-grouping-fn-selector-container.custom-fn-menu {
+  margin-left: 20px;
+}
+.plot-grouping-fn-selector-container.custom-fn-menu option {
+  font-size: 9px;
+}
 .plot-grouping-fn-selector-container select {
   margin: 15px;
   padding: 5px;
