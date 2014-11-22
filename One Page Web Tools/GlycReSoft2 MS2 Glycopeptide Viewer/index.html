@@ -94,7 +94,7 @@
 
         }
         try{
-            d3.csv("/../Data/ExampleResults.csv", function(err, data){
+            d3.csv("Data/ExampleResults.csv", function(err, data){
                 if(err != null) console.log(err)
                 testObjects = _.cloneDeep(data)
                 ctrl = angular.element("#classifier-results").controller()
