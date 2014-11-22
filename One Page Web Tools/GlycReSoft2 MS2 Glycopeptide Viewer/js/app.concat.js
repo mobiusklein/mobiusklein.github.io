@@ -35,6 +35,7 @@ if (Number.isInteger == null) {
       for (_i = 0, _len = matches.length; _i < _len; _i++) {
         match = matches[_i];
         match['groupBy'] = id;
+        match['groupBySize'] = matches.length;
       }
       return id++;
     });
@@ -43,7 +44,6 @@ if (Number.isInteger == null) {
   applyFiltrex = function(predictions, filtrexExpr) {
     var filt, filterResults, i, passed, _i, _ref;
     filt = compileExpression(filtrexExpr);
-    console.log(filt, filt.js);
     filterResults = _.map(predictions, filt);
     passed = [];
     for (i = _i = 0, _ref = predictions.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
@@ -108,9 +108,7 @@ if (Number.isInteger == null) {
     var grid, position;
     grid = $scope.gridOptions.ngGrid;
     position = grid.rowMap[targetRowIndex] * grid.config.rowHeight;
-    console.log(grid.$viewport);
-    grid.$viewport.scrollTop(position);
-    return console.log(grid.$viewport);
+    return grid.$viewport.scrollTop(position);
   };
   activateFn = function($scope, $window, $filter) {
     var orderBy;
@@ -150,12 +148,16 @@ if (Number.isInteger == null) {
       filtrex: "Mean Peptide Coverage > 0"
     },
     requireStubIons: {
-      label: "Require Stub Ions Matches",
+      label: "Require Stub Ion Matches",
       filtrex: "Stub Ion Count > 0"
     },
     requireIonsWithHexNAc: {
-      label: "Require Peptide Backbone Ion Fragmentss with HexNAc Matches",
-      filtrex: "(% y Ion With HexNAc Coverage + % b Ion With HexNAc Coverage) > 0"
+      label: "Require Peptide Backbone Ion Fragment with HexNAc Matches",
+      filtrex: "Mean PeptideHexNAc Coverage > 0"
+    },
+    requirePeptideLongerThanN: {
+      label: "Require Peptide longer than 9 AA",
+      filtrex: "AA Length > 9"
     }
   };
   groupingRules = {
@@ -174,7 +176,7 @@ if (Number.isInteger == null) {
   };
   return angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").controller("ClassifierResultsTableCtrl", [
     "$scope", "$window", '$filter', 'csvService', function($scope, $window, $filter, csvService) {
-      var orderBy;
+      var headerCellTemplateNoPin, orderBy;
       orderBy = $filter("orderBy");
       $scope.helpText = helpText;
       $scope.filterRules = filterRules;
@@ -182,6 +184,7 @@ if (Number.isInteger == null) {
       $scope.predictions = [];
       $scope._predictions = [];
       $scope._predictionsReceiver = [];
+      $scope.name = "GlycReSoft 2 Tandem MS Glycopeptide Analyzer";
       $scope.params = {};
       $scope.headerSubstituitionDictionary = {};
       $scope.params.filtrexExpr = "MS2 Score > 0.2";
@@ -192,7 +195,6 @@ if (Number.isInteger == null) {
         return console.log("ping", arguments, $scope);
       };
       $scope.extendFiltrex = function(expr) {
-        console.log("Extending Filtrex with " + expr);
         if ($scope.params.filtrexExpr.length > 0) {
           return $scope.params.filtrexExpr += " and " + expr;
         } else {
@@ -207,7 +209,6 @@ if (Number.isInteger == null) {
           key = dictionary[column];
           expr = expr.replace(column, key);
         }
-        console.log(expr);
         results = applyFiltrex($scope._predictions, expr);
         orderedResults = orderBy(results, ["MS1_Score", "Obs_Mass", "MS2_Score"]);
         groupedResults = setGroupBy($scope.groupByKey, orderedResults);
@@ -247,7 +248,8 @@ if (Number.isInteger == null) {
           if (topIndex === Infinity) {
             return false;
           }
-          return focusRow($scope, topIndex);
+          focusRow($scope, topIndex);
+          return 0;
         }
       };
       $scope.buildHeaderSubstituitionDictionary = function() {
@@ -286,11 +288,12 @@ if (Number.isInteger == null) {
         dictionary["% b Ion Coverage".toLowerCase()] = "percent_b_ion_coverage";
         dictionary.NAME_MAP.push("% b Ion Coverage");
         dictionary["% y Ion With HexNAc Coverage".toLowerCase()] = "percent_y_ion_with_HexNAc_coverage";
-        dictionary.NAME_MAP.push("% Y Ion With HexNAc Coverage");
+        dictionary.NAME_MAP.push("% y Ion With HexNAc Coverage");
         dictionary["% b Ion With HexNAc Coverage".toLowerCase()] = "percent_b_ion_with_HexNAc_coverage";
         dictionary.NAME_MAP.push("% b Ion With HexNAc Coverage");
         return dictionary;
       };
+      headerCellTemplateNoPin = '<div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': !noSortVisible }"> <div ng-click="col.sort($event)" ng-class="\'colt\' + col.index" class="ngHeaderText">{{col.displayName}}</div> <div class="ngSortButtonDown" ng-show="col.showSortButtonDown()"></div> <div class="ngSortButtonUp" ng-show="col.showSortButtonUp()"></div> <div class="ngSortPriority">{{col.sortPriority}}</div> </div> <div ng-show="col.resizable" class="ngHeaderGrip" ng-click="col.gripClick($event)" ng-mousedown="col.gripOnMouseDown($event)"></div>';
       $scope.gridOptions = {
         data: "predictions",
         showColumnMenu: true,
@@ -305,102 +308,124 @@ if (Number.isInteger == null) {
             width: 90,
             pinned: true,
             displayName: "Scan ID",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'MS2_Score',
             width: 90,
             pinned: true,
             displayName: "MS2 Score",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'MS1_Score',
             width: 90,
             pinned: true,
             displayName: "MS1 Score",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'Obs_Mass',
             width: 130,
             pinned: true,
             displayName: "Observed Mass",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'vol',
             width: 100,
             pinned: true,
             displayName: "Volume",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:3}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'ppm_error',
             width: 90,
             displayName: "PPM Error",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|scientificNotation|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|scientificNotation|number:4}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'Glycopeptide_identifier',
             width: 240,
             displayName: "Glycopeptide Sequence",
             cellClass: "matched-ions-cell glycopeptide-identifier",
-            cellTemplate: '<div><div class="ngCellText" ng-bind-html="row.getProperty(col.field)|highlightModifications"></div></div>'
+            cellTemplate: '<div><div class="ngCellText" ng-bind-html="row.getProperty(col.field)|highlightModifications"></div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'meanCoverage',
             width: 180,
             displayName: "Mean Peptide Coverage",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:4}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:3}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
+          }, {
+            field: 'meanHexNAcCoverage',
+            width: 180,
+            displayName: "Mean PeptideHexNAc Coverage",
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)|number:3}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'percentUncovered',
             width: 165,
             displayName: "% Peptide Uncovered",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field) * 100|number:2}}</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field) * 100|number:2}}</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: "startAA",
             width: 180,
             displayName: "Peptide Span",
-            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)}}-{{row.entity.endAA}}&nbsp;({{row.entity.peptideLens}})</div></div>'
+            cellTemplate: '<div><div class="ngCellText matched-ions-cell">{{row.getProperty(col.field)}}-{{row.entity.endAA}}&nbsp;({{row.entity.peptideLens}})</div></div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'Oxonium_ions',
             width: 200,
             headerClass: null,
             displayName: "Oxonium Ions",
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.numOxIons}} Ions Matched</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.numOxIons}} Ions Matched</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'Stub_ions',
             width: 340,
             displayName: "Stub Ions",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.numStubs}} Ions Matched</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.numStubs}} Ions Matched</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'b_ion_coverage',
             width: 340,
             displayName: "b Ions",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'y_ion_coverage',
             width: 340,
             displayName: "y Ions",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'b_ions_with_HexNAc',
             width: 340,
             displayName: "b Ions with HexNAc",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_with_HexNAc_coverage * 100 |number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_b_ion_with_HexNAc_coverage * 100 |number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }, {
             field: 'y_ions_with_HexNAc',
             width: 340,
             displayName: "y Ions with HexNAc",
             headerClass: null,
             cellClass: "stacked-ions-cell-grid",
-            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_with_HexNAc_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>'
+            cellTemplate: '<div> <div class="ngCellText"> <div class="coverage-text">{{row.entity.percent_y_ion_with_HexNAc_coverage * 100|number:1}}% Coverage</div> <fragment-ion ng-repeat="fragment_ion in row.getProperty(col.field)"></fragment-ion> </div> </div>',
+            headerCellTemplate: headerCellTemplateNoPin
           }
         ],
-        rowTemplate: '<div style="height: 100%" class="c{{row.entity.groupBy % 6}}"> <div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell matched-ions-cell"> <div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }"> </div> <div ng-cell> </div> </div> </div>'
+        rowTemplate: '<div style="height: 100%" class="{{row.entity.groupBySize > 1 ? \'c\' + row.entity.groupBy % 6 : \'cX\'}}"> <div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell matched-ions-cell"> <div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }"> </div> <div ng-cell> </div> </div> </div>'
       };
       activateFn($scope, $window, $filter);
       return $window.ClassifierResultsTableCtrlInstance = $scope;
@@ -426,11 +451,95 @@ ModalInstanceCtrl = function($scope, $modalInstance, title, items, summary, post
 ;
 GlycReSoftMSMSGlycopeptideResultsViewApp.service("csvService", [
   "$window", function($window) {
-    this.serializedFields = ["Oxonium_ions", "Stub_ions", "bare_b_ions", "bare_y_ions", "b_ion_coverage", "y_ion_coverage", "b_ions_with_HexNAc", "y_ions_with_HexNAc", "startAA", "endAA", "vol", "numOxIons", "numStubs", "bestCoverage", "meanCoverage", "percentUncovered", "peptideLens", "MS1_Score", "MS2_Score", "Obs_Mass", "Calc_mass", 'ppm_error', 'abs_ppm_error'];
+    this.serializedFields = ["Oxonium_ions", "Stub_ions", "bare_b_ions", "bare_y_ions", "b_ion_coverage", "y_ion_coverage", "b_ions_with_HexNAc", "y_ions_with_HexNAc", "startAA", "endAA", "vol", "peptideLens", "numOxIons", "numStubs", "scan_id", "meanCoverage", "percentUncovered", "meanHexNAcCoverage", "peptideCoverageMap", "hexNAcCoverageMap", "bIonCoverageMap", "bIonCoverageWithHexNAcMap", "yIonCoverageMap", "yIonCoverageWithHexNAcMap", "MS1_Score", "MS2_Score", "Obs_Mass", "Calc_mass", 'ppm_error', 'abs_ppm_error', 'percent_b_ion_with_HexNAc_coverage', 'percent_y_ion_with_HexNAc_coverage'];
+    this.defaultValues = {
+      "hexNAcCoverageMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      },
+      "peptideCoverageMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      },
+      "meanHexNAcCoverage": function(pred) {
+        return 0.0;
+      },
+      "bIonCoverageMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      },
+      "bIonCoverageWithHexNAcMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      },
+      "yIonCoverageMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      },
+      "yIonCoverageWithHexNAcMap": function(pred) {
+        var i;
+        return [
+          (function() {
+            var _i, _ref, _results;
+            _results = [];
+            for (i = _i = 0, _ref = pred.peptideLens; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+              _results.push(0);
+            }
+            return _results;
+          })()
+        ];
+      }
+    };
     this.parse = function(stringData) {
       var instantiatedData, rowData;
       rowData = d3.csv.parse(stringData);
       instantiatedData = this.deserializeAfterParse(rowData);
+      this.defaultValues(instantiatedData);
       return instantiatedData;
     };
     this.format = function(rowData) {
@@ -453,6 +562,20 @@ GlycReSoftMSMSGlycopeptideResultsViewApp.service("csvService", [
       });
       return predictions;
     };
+    this.setDefaultValues = function(predictions) {
+      var defaultFn, key, pred, _i, _len, _ref;
+      for (_i = 0, _len = predictions.length; _i < _len; _i++) {
+        pred = predictions[_i];
+        _ref = this.defaultValues;
+        for (key in _ref) {
+          defaultFn = _ref[key];
+          if (pred[key] == null) {
+            pred[key] = defaultFn(pred);
+          }
+        }
+      }
+      return predictions;
+    };
     this.serializeBeforeFormat = function(predictions) {
       var self;
       self = this;
@@ -468,34 +591,85 @@ GlycReSoftMSMSGlycopeptideResultsViewApp.service("csvService", [
       });
       return predictions;
     };
-    console.log(this);
     return $window.csvService = this;
   }
 ]);
 ;
+var ColorSource;
+
+ColorSource = (function() {
+  function ColorSource() {}
+
+  ColorSource.colors = ["blue", "rgb(228, 211, 84)", "red", "purple", "grey", "black", "green", "orange", "brown"];
+
+  ColorSource.pepColors = ["seagreen", "mediumseagreen", "green", "limegreen", "darkgreen"];
+
+  ColorSource.colorIters = {
+    "_colorIter": 0,
+    "_pepColorIter": 0
+  };
+
+  ColorSource.colorMapDefault = {
+    modColorMap: {
+      HexNAc: "#CC99FF"
+    },
+    pepColorMap: {}
+  };
+
+  ColorSource.colorMap = {
+    modColorMap: {
+      HexNAc: "#CC99FF"
+    },
+    pepColorMap: {}
+  };
+
+  ColorSource.resetMap = function(key) {
+    return this.colorMap[key] = _.cloneDeep(this.colorMapDefault[key]);
+  };
+
+  ColorSource._nextColor = function() {
+    var color;
+    color = this.colors[this.colorIters["_colorIter"]++];
+    if (this.colorIters["_colorIter"] >= this.colors.length) {
+      this.colorIters["_colorIter"] = 0;
+    }
+    return color;
+  };
+
+  ColorSource._nextPepColor = function() {
+    var color;
+    color = this.pepColors[this.colorIters["_pepColorIter"]++];
+    if (this.colorIters["_pepColorIter"] >= this.pepColors.length) {
+      this.colorIters["_pepColorIter"] = 0;
+    }
+    return color;
+  };
+
+  ColorSource.getColor = function(label) {
+    if (!(label in this.colorMap.modColorMap)) {
+      this.colorMap.modColorMap[label] = this._nextColor();
+    }
+    return this.colorMap.modColorMap[label];
+  };
+
+  ColorSource.getPepColor = function(label) {
+    if (!(label in this.colorMap.pepColorMap)) {
+      this.colorMap.pepColorMap[label] = this._nextPepColor();
+    }
+    return this.colorMap.pepColorMap[label];
+  };
+
+  ColorSource.resetPepColors = function() {
+    return this.resetMap("pepColorMap");
+  };
+
+  return ColorSource;
+
+})();
+
 angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").service("colorService", [
   function() {
-    this.colors = ["blue", "rgb(228, 211, 84)", "red", "purple", "grey", "black", "green", "orange", "brown"];
-    this._colorIter = 0;
-    this.colorMap = {
-      Peptide: "seagreen",
-      HexNAc: "#CC99FF"
-    };
-    this._nextColor = function() {
-      var color;
-      color = this.colors[this._colorIter++];
-      if (this._colorIter >= this.colors.length) {
-        this._colorIter = 0;
-      }
-      return color;
-    };
-    this.getColor = function(label) {
-      if (!(label in this.colorMap)) {
-        this.colorMap[label] = this._nextColor();
-      }
-      return this.colorMap[label];
-    };
-    return console.log(this);
+    return ColorSource;
   }
 ]);
 ;
@@ -503,7 +677,7 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
 
 angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSequenceView", [
   "$window", "$filter", "colorService", "$modal", "$timeout", function($window, $filter, colorService, $modal, $timeout) {
-    var featureTemplate, fragmentsContainingModification, fragmentsSurroundingPosition, generateConfig, getBestScoresForModification, heightLayerMap, highlightModifications, legendKeyTemplate, makeGlycanCompositionContent, orderBy, parseGlycopeptideIdentifierToModificationsArray, shapeMap, shapes, transformFeatuersToLegend, transformPredictionGroupsToFeatures, typeCategoryMap, updateView, _layerCounter, _layerIncrement, _shapeIter;
+    var coverageModalHistogram, featureTemplate, fragmentsContainingModification, fragmentsSurroundingPosition, generateConfig, getBestScoresForModification, heightLayerMap, highlightModifications, legendKeyTemplate, makeGlycanCompositionContent, orderBy, parseGlycopeptideIdentifierToModificationsArray, shapeMap, shapes, transformFeatuersToLegend, transformPredictionGroupsToFeatures, typeCategoryMap, updateView, _layerCounter, _layerIncrement, _shapeIter;
     $window.modal = $modal;
     orderBy = $filter("orderBy");
     $window.orderBy = orderBy;
@@ -718,9 +892,9 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
         summary: glycanCompositionContent,
         items: [],
         postLoadFn: function() {
-          return angular.element('.frequency-plot-container').highcharts({
+          return $('.frequency-plot-container').highcharts({
             data: {
-              table: angular.element('.glycan-composition-frequency-table')[0]
+              table: $('.glycan-composition-frequency-table')[0]
             },
             chart: {
               type: 'column'
@@ -747,6 +921,17 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
               enabled: false
             }
           });
+        }
+      };
+    };
+    coverageModalHistogram = function(glycoform) {
+      glycoform.hasModalContent = true;
+      return glycoform.modalOptions = {
+        title: "Peptide Coverage",
+        summary: "<div class='frequency-plot-container'></div>",
+        items: [],
+        postLoadFn: function() {
+          return new PlotUtils.BackboneStackChart(glycoform._obj, ".frequency-plot-container").render();
         }
       };
     };
@@ -778,7 +963,6 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           feature.featureLabel = label;
           feature.featureTypeLabel = label;
           feature.featureId = label + "-" + (index + startSite);
-          feature.additionalTooltipContent = "Scan ID: " + glycoform.scan_id + "<br/>";
           if (!(label in heightLayerMap)) {
             _layerCounter += _layerIncrement;
             heightLayerMap[label] = _layerCounter;
@@ -793,19 +977,31 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
       return modifications;
     };
     transformPredictionGroupsToFeatures = function(predictions) {
-      var arrange, depth, feature, featuresArray, foldedMods, frag, fragRange, fragments, glycoform, glycoformModifications, modifications, topMods, _i, _j, _len, _len1;
+      var arrange, colorIter, depth, end, feature, featuresArray, foldedMods, frag, fragRange, fragments, glycoform, glycoformModifications, modifications, sortFn, start, topMods, _i, _j, _len, _len1, _ref;
       fragments = _.groupBy(predictions, function(p) {
         return [p.startAA, p.endAA];
       });
       featuresArray = [];
       modifications = [];
-      arrange = orderBy(Object.keys(fragments, function(range) {
-        var end, start, _ref;
-        _ref = range.split(","), start = _ref[0], end = _ref[1];
-        return end - start;
-      })).reverse();
+      sortFn = function(a, b) {
+        var aEnd, aLen, aStart, bEnd, bLen, bStart, _ref, _ref1;
+        _ref = a.split(','), aStart = _ref[0], aEnd = _ref[1];
+        _ref1 = b.split(','), bStart = _ref1[0], bEnd = _ref1[1];
+        aLen = aEnd - aStart;
+        bLen = bEnd - bStart;
+        if (aLen > bLen) {
+          return -1;
+        } else if (aLen < bLen) {
+          return 1;
+        } else {
+          return 0;
+        }
+      };
+      arrange = Object.keys(fragments).sort(sortFn);
+      colorIter = 0;
       for (_i = 0, _len = arrange.length; _i < _len; _i++) {
         fragRange = arrange[_i];
+        _ref = fragRange.split(","), start = _ref[0], end = _ref[1];
         frag = fragments[fragRange];
         depth = 1;
         frag = orderBy(frag, "MS2_Score").reverse();
@@ -813,10 +1009,11 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           glycoform = frag[_j];
           feature = _.cloneDeep(featureTemplate);
           feature.type = shapeMap.Peptide;
-          feature.fill = colorService.getColor("Peptide");
-          feature.stroke = colorService.getColor("Peptide");
+          feature.fill = colorService.getPepColor("Peptide" + glycoform.scan_id);
+          feature.stroke = colorService.getPepColor("Peptide" + glycoform.scan_id);
           feature.featureStart = glycoform.startAA;
           feature.featureEnd = glycoform.endAA;
+          feature.text = glycoform.Glycopeptide_identifier;
           feature.typeLabel = "Peptide";
           feature.typeCode = "";
           feature.typeCategory = "";
@@ -829,9 +1026,12 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           feature.modifications = _.pluck(glycoformModifications, "featureId");
           feature._obj = glycoform;
           feature.featureLabel = highlightModifications(glycoform.Glycopeptide_identifier, false);
+          feature.additionalTooltipContent = "<br/>Scan ID: " + glycoform.scan_id + "<br/>Mass: " + glycoform.Obs_Mass;
+          coverageModalHistogram(feature);
           featuresArray.push(feature);
           depth++;
         }
+        colorIter++;
       }
       foldedMods = _.pluck(_.groupBy(modifications, "featureId"), function(obj) {
         return obj[0];
@@ -844,7 +1044,13 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
       var biojsId, conf;
       scope.start = Math.min.apply(null, _.pluck(scope.predictions, "startAA"));
       scope.end = Math.max.apply(null, _.pluck(scope.predictions, "endAA"));
+      colorService.resetPepColors();
       scope.featureViewerConfig.featuresArray = transformPredictionGroupsToFeatures(scope.predictions);
+      scope.scanMap = _.groupBy(_.filter(scope.featureViewerConfig.featuresArray, function(obj) {
+        return obj.featureTypeLabel === "glycopeptide_match";
+      }), function(obj) {
+        return obj._obj.scan_id;
+      });
       scope.featureViewerConfig.legend.keys = [];
       conf = scope.featureViewerConfig.configuration = generateConfig($window);
       conf.requestedStart = scope.start;
@@ -863,15 +1069,14 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
         json: _.cloneDeep(scope.featureViewerConfig)
       });
       scope.featureViewerInstance.onFeatureClick(function(featureShape) {
-        var feature, id;
+        var feature, id, preds;
         id = featureShape.featureId;
         feature = _.find(scope.featureViewerConfig.featuresArray, {
           featureId: id
         });
-        console.log(id, feature);
         if (feature.hasModalContent) {
           window.modalInstance = $modal.open({
-            templateUrl: "myModalContent.html",
+            templateUrl: "templates/summary-modal.html",
             scope: scope,
             controller: ModalInstanceCtrl,
             size: 'lg',
@@ -895,41 +1100,65 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
           });
         }
         if (feature.featureTypeLabel === "glycopeptide_match") {
+          preds = [];
+          if (feature._obj.scan_id != null) {
+            preds = _.pluck(scope.scanMap[feature._obj.scan_id], "_obj");
+          } else {
+            preds = [feature._obj];
+          }
           return scope.$emit("selectedPredictions", {
-            selectedPredictions: [feature._obj]
+            selectedPredictions: preds
           });
         }
       });
       scope.featureViewerInstance.onFeatureOn(function(featureShape) {
-        var feature, id, mod, modId, _i, _len, _ref, _results;
+        var ambiguousMatches, feat, featId, featShape, feature, id, mod, modId, _i, _j, _len, _len1, _ref, _results;
         id = featureShape.featureId;
         feature = _.find(scope.featureViewerConfig.featuresArray, {
           featureId: id
         });
         if (feature.modifications != null) {
           _ref = feature.modifications;
-          _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             mod = _ref[_i];
             modId = "uniprotFeaturePainter_" + mod;
-            _results.push(scope.featureViewerInstance.raphael.getById(modId).transform("s2").attr("fill-opacity", 1));
+            scope.featureViewerInstance.raphael.getById(modId).transform("s2").attr("fill-opacity", 1);
+          }
+        }
+        if (feature._obj.scan_id != null) {
+          ambiguousMatches = scope.scanMap[feature._obj.scan_id];
+          _results = [];
+          for (_j = 0, _len1 = ambiguousMatches.length; _j < _len1; _j++) {
+            feat = ambiguousMatches[_j];
+            featId = "uniprotFeaturePainter_" + feat.featureId;
+            featShape = scope.featureViewerInstance.raphael.getById(featId);
+            _results.push(featShape.attr("fill", "red"));
           }
           return _results;
         }
       });
       scope.featureViewerInstance.onFeatureOff(function(featureShape) {
-        var feature, id, mod, modId, _i, _len, _ref, _results;
+        var ambiguousMatches, feat, featId, featShape, feature, id, mod, modId, _i, _j, _len, _len1, _ref, _results;
         id = featureShape.featureId;
         feature = _.find(scope.featureViewerConfig.featuresArray, {
           featureId: id
         });
         if (feature.modifications != null) {
           _ref = feature.modifications;
-          _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             mod = _ref[_i];
             modId = "uniprotFeaturePainter_" + mod;
-            _results.push(scope.featureViewerInstance.raphael.getById(modId).transform("s1").attr("fill-opacity", 0.5));
+            scope.featureViewerInstance.raphael.getById(modId).transform("s1").attr("fill-opacity", 0.5);
+          }
+        }
+        if (feature._obj.scan_id != null) {
+          ambiguousMatches = scope.scanMap[feature._obj.scan_id];
+          _results = [];
+          for (_j = 0, _len1 = ambiguousMatches.length; _j < _len1; _j++) {
+            feat = ambiguousMatches[_j];
+            featId = "uniprotFeaturePainter_" + feat.featureId;
+            featShape = scope.featureViewerInstance.raphael.getById(featId);
+            _results.push(featShape.attr("fill", colorService.getPepColor("Peptide" + feat._obj.scan_id)));
           }
           return _results;
         }
@@ -941,6 +1170,9 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
     };
     return {
       restrict: "E",
+      scope: {
+        predictions: "="
+      },
       link: function(scope, element, attrs) {
         scope.getColorMap = function() {
           return colorMap;
@@ -961,13 +1193,15 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("proteinSeq
             key: []
           }
         };
-        console.log("proteinSequenceView", arguments);
         window.TEST = scope;
-        return scope.$on("proteinSequenceView.updateProteinView", function(evt, params) {
+        scope.$on("proteinSequenceView.updateProteinView", function(evt, params) {
+          return updateView(scope, element);
+        });
+        return scope.$watch("predictions", function() {
           return updateView(scope, element);
         });
       },
-      template: "<div class='protein-sequence-view-container' id='protein-sequence-view-container-div'>!!</div>"
+      template: "<div class='protein-sequence-view-container' id='protein-sequence-view-container-div'></div>"
     };
   }
 ]);
@@ -1173,12 +1407,13 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
       scope.seriesData = groupParams.groupingFn(predictions);
       scope.describedPredictions = [];
       _ref = scope.seriesData, ionSeries = _ref.ionSeries, notAmbiguous = _ref.notAmbiguous;
-      if (!scope.hideUnambiguous) {
+      if (!scope.ambiguityPlotParams.hideUnambiguous) {
         ionSeries = ionSeries.concat(notAmbiguous);
       }
       plotOptions = ambiguityPlotTemplater(scope, ionSeries, xAxisTitle = groupParams.xAxisTitle, yAxisTitle = groupParams.yAxisTitle, plotType = groupParams.plotType);
       chart = element.find(".ambiguity-plot-container");
-      return chart.highcharts(plotOptions);
+      chart.highcharts(plotOptions);
+      return true;
     };
     return {
       restrict: "AE",
@@ -1186,7 +1421,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
         predictions: '=',
         headerSubstituitionDictionary: '=headers'
       },
-      template: "<div class='amiguity-container'> <div class='plot-grouping-fn-selector-container'> Plot Function <select class='plot-grouping-fn-selector-box' ng-model='grouping.groupingFnKey' ng-options='key for (key, value) in grouping.groupingsOptions' ng-change='requestPredictionsUpdate()'> </select> <label>Hide Unambiguous <input type='checkbox' ng-model='ambiguityPlotParams.hideUnambiguous'/></label> <a ng-click='ambiguityPlotParams.showCustomPlotter=!ambiguityPlotParams.showCustomPlotter'>Make Your Own</a> <span class='custom-fn-menu' ng-show='ambiguityPlotParams.showCustomPlotter'> <button class='btn btn-primary' ng-click='customPlot()'>Plot</button> </span> <div ng-show='ambiguityPlotParams.showCustomPlotter' class='plot-grouping-fn-selector-container custom-fn-menu'> X Axis <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.x' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP'> </select> Y Axis <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.y' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP'> </select> Z Axis (Optional) <select class='plot-grouping-fn-selector-box' ng-model='ambiguityPlotParams.z' ng-options='label for label in headerSubstituitionDictionary.NAME_MAP.concat(\"None\")'> </select> </div> </div> <div class='ambiguity-plot-container'></div> <div class='ambiguity-peptide-sequences-container' ng-if='describedPredictions.length > 0'> <div class='ambiguity-peptide-attributes-container clearfix'> <div class='pull-left ambiguity-peptide-attributes'> <p>MS2 Score Range: {{describedMS2Min}} - {{describedMS2Max}}</p> <p>Amino Acid Regions: {{describedPeptideRegions()}}</p> </div> <div class='pull-left ambiguity-peptide-attributes'> <p>Peptide Sequence: {{describedPredictions[0].Peptide}}</p> <p>Distinct Glycan Count: {{keys(_.groupBy(describedPredictions, 'Glycan')).length}} </div> </div> <table class='table table-striped table-compact ambiguity-peptide-sequences-table'> <tr> <th>Glycopeptide Identifier</th> <th>Peptide Coverage</th> <th># Stub Ions</th> <th>B | Y Ions Coverage (+HexNAc)</th> <th>MS2 Score</th> </tr> <tr ng-repeat='match in describedPredictions | orderBy:[\"MS2_Score\",\"Glycan\",\"numStubs\"]:true'> <td ng-bind-html='match.Glycopeptide_identifier | highlightModifications'></td> <td>{{match.meanCoverage | number:4}}</td> <td>{{match.Stub_ions.length}}</td> <td>{{match.percent_b_ion_coverage * 100|number:1}}%({{match.percent_b_ion_with_HexNAc_coverage * 100|number:1}}%) | {{match.percent_y_ion_coverage * 100|number:1}}%({{match.percent_y_ion_with_HexNAc_coverage * 100|number:1}}%) </td> <td>{{match.MS2_Score}}</td> </tr> </table> </div> </div>",
+      templateUrl: "templates/ambiguity-plot-template.html",
       link: function(scope, element, attr) {
         $window.PLOTTING = scope;
         scope.describedPredictions = [];
@@ -1232,7 +1467,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
               name: 'Mean Peptide Coverage',
               getter: 'meanCoverage'
             }, {
-              name: '',
+              name: 'None',
               getter: function(p) {
                 return null;
               }
@@ -1257,9 +1492,12 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
             return p.startAA + '-' + p.endAA;
           })).join('; ');
         };
+        scope.plotSelectorChanged = function() {
+          updatePlot(scope.predictions, scope, element);
+          return true;
+        };
         scope.customPlot = function() {
           var groupingParams, x, y, z;
-          console.log(scope.ambiguityPlotParams);
           x = scope.ambiguityPlotParams.x;
           y = scope.ambiguityPlotParams.y;
           z = scope.ambiguityPlotParams.z;
@@ -1305,6 +1543,9 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("ambiguityP
         scope.$on("ambiguityPlot.renderPlot", function(evt, params) {
           return updatePlot(scope.predictions, scope, element);
         });
+        scope.$watch("predictions", function() {
+          return updatePlot(scope.predictions, scope, element);
+        });
         return scope.$watch('ambiguityPlotParams.hideUnambiguous', function(newVal, oldVal) {
           return updatePlot(scope.predictions, scope, element);
         });
@@ -1318,7 +1559,7 @@ var fragmentIon;
 fragmentIon = GlycReSoftMSMSGlycopeptideResultsViewApp.directive("fragmentIon", function() {
   return {
     restrict: "AE",
-    template: "<p class='fragment-ion-tag'><b>PPM Error</b>: {{fragment_ion.ppm_error|scientificNotation}} &nbsp; <b>Key</b>: {{fragment_ion.key}}</p>"
+    template: "<p class='fragment-ion-tag'><b>PPM Error</b>: {{fragment_ion.ppm_error|number:2}} &nbsp; <b>Key</b>: {{fragment_ion.key}}</p>"
   };
 });
 ;
@@ -1350,8 +1591,11 @@ resizeable = GlycReSoftMSMSGlycopeptideResultsViewApp.directive('resizable', fun
 angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("saveCsv", [
   "csvService", function(csvService) {
     var saveCsv;
-    saveCsv = function(predictions, element) {
+    saveCsv = function(predictions, element, fileName) {
       var blob, output;
+      if (fileName == null) {
+        fileName = "results.csv";
+      }
       if (!((typeof Blob !== "undefined" && Blob !== null) && (typeof saveAs !== "undefined" && saveAs !== null))) {
         alert("File Saving is not supported with this browser");
         return;
@@ -1360,13 +1604,42 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("saveCsv", 
       blob = new Blob([output], {
         type: "text/csv;charset=utf-8"
       });
-      return saveAs(blob, "results.csv");
+      return saveAs(blob, fileName);
     };
     return {
+      restrict: "EA",
+      scope: {
+        predictions: '=',
+        predictionsUnfiltered: '=',
+        mayOpenFile: '='
+      },
+      templateUrl: "templates/save-csv-menu.html",
       link: function(scope, element, attrs) {
-        console.log("Save-Csv", arguments);
-        return element.click(function() {
-          return saveCsv(scope._predictionsReceiver, element);
+        console.log("Save-Csv!!!", arguments);
+        scope.status = {
+          isopen: false
+        };
+        window.TESTCSVBTN = scope;
+        element.find(".save-filter-results-anchor").click(function(e) {
+          return saveCsv(scope.predictions, element, "filtered-results.csv");
+        });
+        element.find(".save-all-results-anchor").click(function(e) {
+          return saveCsv(scope.predictionsUnfiltered, element, "all-results.csv");
+        });
+        element.find(".open-file-anchor").click(function(e) {
+          return element.find("#file-opener").click();
+        });
+        return element.find("#file-opener").change(function(e) {
+          var fileReader;
+          fileReader = new FileReader();
+          fileReader.onload = function(e) {
+            var fileContents, parsedData;
+            fileContents = e.target.result;
+            parsedData = d3.csv.parse(fileContents);
+            return registerDataChange(parsedData);
+          };
+          fileReader.readAsText(this.files[0], 'UTF-8');
+          return console.log("reading file");
         });
       }
     };
@@ -1388,7 +1661,6 @@ angular.module('GlycReSoftMSMSGlycopeptideResultsViewApp').directive("popoverHtm
   };
 }).directive("popoverHtmlUnsafe", [
   "$tooltip", function($tooltip) {
-    console.log(arguments);
     return $tooltip("popoverHtmlUnsafe", "popover", "click");
   }
 ]);
@@ -1401,7 +1673,7 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").directive("helpMenu",
         return element.click(function() {
           var modalInstance;
           return modalInstance = $modal.open({
-            templateUrl: '/Web/templates/help-text.html',
+            templateUrl: 'templates/help-text.html',
             size: 'lg'
           });
         });
@@ -1478,3 +1750,278 @@ angular.module("GlycReSoftMSMSGlycopeptideResultsViewApp").filter("scientificNot
     }
   };
 });
+;
+var ColorSource2;
+
+ColorSource2 = (function() {
+  function ColorSource2() {}
+
+  ColorSource2.colors = ["blue", "rgb(228, 211, 84)", "red", "purple", "grey", "black", "green", "orange", "brown"];
+
+  ColorSource2.pepColors = ["seagreen", "mediumseagreen", "green", "limegreen", "darkgreen"];
+
+  ColorSource2.colorIters = {
+    "_colorIter": 0,
+    "_pepColorIter": 0
+  };
+
+  ColorSource2.colorMapDefault = {
+    modColorMap: {
+      HexNAc: "#CC99FF"
+    },
+    pepColorMap: {}
+  };
+
+  ColorSource2.colorMap = {
+    modColorMap: {
+      HexNAc: "#CC99FF"
+    },
+    pepColorMap: {}
+  };
+
+  ColorSource2.resetMap = function(key) {
+    return this.colorMap[key] = _.cloneDeep(this.colorMapDefault[key]);
+  };
+
+  ColorSource2._nextColor = function() {
+    var color;
+    color = this.colors[this.colorIters["_colorIter"]++];
+    if (this.colorIters["_colorIter"] >= this.colors.length) {
+      this.colorIters["_colorIter"] = 0;
+    }
+    return color;
+  };
+
+  ColorSource2._nextPepColor = function() {
+    var color;
+    color = this.pepColors[this.colorIters["_pepColorIter"]++];
+    if (this.colorIters["_pepColorIter"] >= this.pepColors.length) {
+      this.colorIters["_pepColorIter"] = 0;
+    }
+    return color;
+  };
+
+  ColorSource2.getColor = function(label) {
+    if (!(label in this.colorMap.modColorMap)) {
+      this.colorMap.modColorMap[label] = this._nextColor();
+    }
+    return this.colorMap.modColorMap[label];
+  };
+
+  ColorSource2.getPepColor = function(label) {
+    if (!(label in this.colorMap.pepColorMap)) {
+      this.colorMap.pepColorMap[label] = this._nextPepColor();
+    }
+    return this.colorMap.pepColorMap[label];
+  };
+
+  ColorSource2.resetPepColors = function() {
+    return this.resetMap("pepColorMap");
+  };
+
+  return ColorSource2;
+
+})();
+;
+var GlycopeptideLib;
+
+GlycopeptideLib = (function() {
+  function GlycopeptideLib() {}
+
+  GlycopeptideLib.buildBackboneStack = function(glycopeptide) {
+    var bHexNAc, bIon, i, index, key, len, stack, yHexNAc, yIon, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
+    stack = (function() {
+      var _i, _ref, _results;
+      _results = [];
+      for (i = _i = 0, _ref = glycopeptide.peptideLens; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        _results.push({
+          bIon: [0, 0],
+          yIon: [0, 0],
+          bHexNAc: [0, 0],
+          yHexNAc: [0, 0]
+        });
+      }
+      return _results;
+    })();
+    len = glycopeptide.peptideLens;
+    _ref = glycopeptide.b_ion_coverage;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      bIon = _ref[_i];
+      key = bIon.key;
+      index = parseInt(key.replace(/B/, ''));
+      stack[index].bIon = [0, index];
+    }
+    _ref1 = glycopeptide.y_ion_coverage;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      yIon = _ref1[_j];
+      key = yIon.key;
+      index = parseInt(key.replace(/Y/, ''));
+      stack[len - index].yIon = [len - index, len];
+    }
+    _ref2 = glycopeptide.b_ions_with_HexNAc;
+    for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+      bHexNAc = _ref2[_k];
+      key = bHexNAc.key;
+      index = parseInt(/B([0-9]+)\+/.exec(key)[1]);
+      stack[index].bHexNAc = [0, index];
+    }
+    _ref3 = glycopeptide.y_ions_with_HexNAc;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      yHexNAc = _ref3[_l];
+      key = yHexNAc.key;
+      index = parseInt(/Y([0-9]+)\+/.exec(key)[1]);
+      stack[len - index].yHexNAc = [len - index, len];
+    }
+    return stack;
+  };
+
+  GlycopeptideLib.parseModificationSites = function(glycopeptide) {
+    var feature, frag, fragments, index, label, modifications, regex, sequence, _i, _len;
+    sequence = glycopeptide.Glycopeptide_identifier;
+    regex = /(\(.+?\)|\[.+?\])/;
+    index = 0;
+    fragments = sequence.split(regex);
+    modifications = [];
+    for (_i = 0, _len = fragments.length; _i < _len; _i++) {
+      frag = fragments[_i];
+      if (frag.charAt(0) === "[") {
+
+      } else if (frag.charAt(0) === "(") {
+        label = frag.replace(/\(|\)/g, "");
+        feature = {
+          name: label,
+          position: index
+        };
+        modifications.push(feature);
+      } else {
+        index += frag.length;
+      }
+    }
+    return modifications;
+  };
+
+  return GlycopeptideLib;
+
+})();
+;
+var PlotUtils;
+
+PlotUtils = (function() {
+  var BackboneStackChart, ModificationDistributionChart, addAlphaToRGB, ns;
+  ns = {};
+  addAlphaToRGB = function(rgb, opacity) {
+    return "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + opacity;
+  };
+  ns.BackboneStackChart = BackboneStackChart = (function() {
+    BackboneStackChart.template = {
+      chart: {
+        type: "columnrange",
+        inverted: true
+      },
+      title: {
+        text: "Peptide Backbone Fragment Coverage"
+      },
+      xAxis: [
+        {
+          title: {
+            text: "Sequence Position"
+          },
+          allowDecimals: false
+        }
+      ],
+      yAxis: {
+        title: {
+          text: "Backbone Fragmentation Site"
+        },
+        allowDecimals: false,
+        min: 0,
+        max: null
+      },
+      plotOptions: {
+        columnrange: {
+          animation: false,
+          groupPadding: 0
+        }
+      },
+      legend: {
+        enabled: true
+      },
+      series: []
+    };
+
+    function BackboneStackChart(glycopeptide, container) {
+      this.glycopeptide = glycopeptide;
+      this.container = container;
+      this.backboneStack = GlycopeptideLib.buildBackboneStack(this.glycopeptide);
+      this.config = _.cloneDeep(BackboneStackChart.template);
+      this.config.yAxis.max = this.glycopeptide.peptideLens;
+      this.config.series.push({
+        name: "b Ion",
+        data: _.pluck(this.backboneStack, "bIon")
+      });
+      this.config.series.push({
+        name: "y Ion",
+        data: _.pluck(this.backboneStack, "yIon")
+      });
+      this.config.series.push({
+        name: "b Ion + HexNAc",
+        data: _.pluck(this.backboneStack, "bHexNAc")
+      });
+      this.config.series.push({
+        name: "y Ion + HexNAc",
+        data: _.pluck(this.backboneStack, "yHexNAc")
+      });
+      this.addModificationBars();
+    }
+
+    BackboneStackChart.prototype.addModificationBars = function() {
+      var i, mod, modificationSites, _i, _len, _results;
+      modificationSites = GlycopeptideLib.parseModificationSites(this.glycopeptide);
+      _results = [];
+      for (_i = 0, _len = modificationSites.length; _i < _len; _i++) {
+        mod = modificationSites[_i];
+        _results.push(this.config.series.push({
+          name: "" + mod.name + "-" + mod.position,
+          data: (function() {
+            var _j, _ref, _results1;
+            _results1 = [];
+            for (i = _j = 0, _ref = this.glycopeptide.peptideLens; 0 <= _ref ? _j <= _ref : _j >= _ref; i = 0 <= _ref ? ++_j : --_j) {
+              _results1.push([i, mod.position]);
+            }
+            return _results1;
+          }).call(this),
+          type: "scatter",
+          color: addAlphaToRGB(new RGBColor(ColorSource.getColor(mod.name)), 0.65),
+          marker: {
+            radius: 4,
+            symbol: "circle"
+          }
+        }));
+      }
+      return _results;
+    };
+
+    BackboneStackChart.prototype.render = function() {
+      this.chart = $(this.container).highcharts(this.config);
+      return this;
+    };
+
+    return BackboneStackChart;
+
+  })();
+  ns.ModificationDistributionChart = ModificationDistributionChart = (function() {
+    function ModificationDistributionChart(predictions, container) {
+      this.predictions = predictions;
+      this.container = container;
+    }
+
+    ModificationDistributionChart.prototype.render = function() {
+      this.chart = $(this.container).highcharts(this.config);
+      return this;
+    };
+
+    return ModificationDistributionChart;
+
+  })();
+  return ns;
+})();
