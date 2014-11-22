@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Vendor Dependencies. -->
     <script type="text/javascript" src="js/vendor/vendor.concat.js"></script>
-    <base href="{{location.href}}">
     <script type="text/javascript">
     var objects = []
     </script>
@@ -78,6 +77,7 @@
     <script type="text/javascript">
     $(function(){
         window.objects = []
+        $("head").append($("<base>").attr('href', location.href))
         console.log(console.log)
         window.registerDataChange = function (data, name){
             try{
