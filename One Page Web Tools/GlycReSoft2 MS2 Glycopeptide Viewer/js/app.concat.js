@@ -187,7 +187,7 @@ if (Number.isInteger == null) {
       $scope.name = "GlycReSoft 2 Tandem MS Glycopeptide Analyzer";
       $scope.params = {};
       $scope.headerSubstituitionDictionary = {};
-      $scope.params.filtrexExpr = "MS2 Score > 0.2";
+      $scope.params.filtrexExpr = "MS2 Score > 0.5";
       $scope.params.currentGroupingRule = $scope.groupingRules.ms1ScoreObsMass;
       $scope.groupByKey = null;
       $scope.deregisterWatcher = null;
