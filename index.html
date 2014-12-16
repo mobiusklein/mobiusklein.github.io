@@ -3,28 +3,39 @@
 <title>mobiusklein</title>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <script>
 $(function(){
     $.getJSON('/projects.json', function(json, textStatus) {
-            var projectList = $('#project-list')
+            var categoryList = $('#project-list')
             console.log(json);
-            var obj = json
-            for(var i in obj){
-                console.log('Category', i)
-                var category = $('<li></li>').html(i)
-                var projects = $('<ul></ul>')
-                for(var j in obj[i]){
-                    console.log("Project", j)
-                    projects.append($("<li></li>").html('<a href="' + encodeURI(i) + '/' + encodeURI(obj[i][j]) + '">' + obj[i][j] + '</a>'))
-                }
-                category.append(projects)
-                projectList.append(category)
-            }
+            _.forEach(json, function(projects, categoryName){
+                console.log(categoryName)
+                var categoryEntry = $('<li></li>').html(categoryName)
+                var projectList = $('<ul></ul>')
+                _.forEach(projects, function(project, name){
+                    var projectEntry = $("<li></li>").addClass("project-item")
+                    var commentTag = $("<small></small>").html(project.comment).addClass("project-comment")
+                    var linkTag = $("<a></a>").html(project.title).attr("href", project.link)
+                    projectEntry.append(linkTag).append(commentTag)
+                    projectList.append(projectEntry)
+                })
+                categoryList.append(categoryEntry.append(projectList))
+            })
     });
 });
 </script>
+<style>
+    .project-comment {
+        display: block;
+    }
+    .project-item {
+        padding: 5px;
+    }
+
+</style>
 </head>
 <body >
 <h2 style='text-align: center;'>Mobiusklein's Project Page</h2>

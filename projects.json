@@ -1,16 +1,44 @@
 {
-    "Research and Visualization" : [
-        "Visualize Influenza Microarray Combinatorics",
-        "Force Directed Regulon",
-        "SequenceView",
-        "Simulating Evolution in Competetive Organisms"
-    ],
-    "One Page Web Tools": [
-        "GenePopBuilder",
-        "GlycReSoft2 MS2 Glycopeptide Viewer"
-    ],
-    "Web Tools and Plugins":[
-        "ng-scientific-notation"
-    ]
+    "Research and Visualization" : {
+        "Visualize Influenza Microarray Combinatorics":{
+            "title": "Visualize Influenza Microarray Combinatorics",
+            "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Visualize%20Influenza%20Microarray%20Combinatorics",
+            "comment": "A simple tool for visualizing the way dimensions overlap for a rotation project, looking for commonalities within and between dimensions in individuals infected with disease based on disease, sampled tissue, and sequencing platform"
+        },
+        "Force Directed Regulon":{
+            "title": "Force Directed Regulon",
+            "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Force%20Directed%20Regulon",
+            "comment": "A class project experimenting with visualizing the Mycobacterium tuberculosis regulon for controlling metabolic state in aerobic versus anaerobic conditions"
+        },
+        "Pathogen Gene Mutation Annotation Viewer for antibiotic resistance":{
+            "title": "Pathogen Gene Mutation Annotation Viewer for antibiotic resistance",
+            "link": "http://mobiusklein.github.io/Research%20and%20Visualization/SequenceView",
+            "comment": "A tool for visualizing and searching the variant calls and annotations from PathoVar"
+        },
+        "Simulating Evolution in Competetive Organisms":{
+            "title": "Simulating Evolution in Competetive Organisms",
+            "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Simulating%20Evolution%20in%20Competetive%20Organisms",
+            "comment": "A class project experimenting with bacterial evolution simulation involving interacting populations and environments"
+        }
+    },
+    "One Page Web Tools": {
+            "GenePopBuilder":{
+                "title": "GenePopBuilder",
+                "link": "http://mobiusklein.github.io/One%20Page%20Web%20Tools/GenePopBuilder",
+                "comment": "An old, unloved population genetics file format that a friend needed a convenient data entry tool for"
+            },
+            "GlycReSoft2 MS2 Glycopeptide Viewer":{
+                "title": "GlycReSoft2 MS2 Glycopeptide Viewer",
+                "link": "http://mobiusklein.github.io/One%20Page%20Web%20Tools/GlycReSoft2%20MS2%20Glycopeptide%20Viewer",
+                "comment": "Active work on visualizing glycoproteomics data from targeted Mass Spectrometry and tandem Mass Spectrometry experiments"
+            }
+    },
+    "Web Tools and Plugins":{
+        "ng-scientific-notation": {
+            "title": "ng-scientific-notation",
+            "link": "http://mobiusklein.github.io/ng-scientific-notation/",
+            "comment": "A simple Angular directive for more direct control over rendering numbers in scientific notation"
+        }
+    }    
 
 }
