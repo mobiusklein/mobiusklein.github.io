@@ -12,7 +12,11 @@
         console.log("Page Ready")
         $.get('/projects.json').success(function(json, textStatus) {
                 var categoryList = $('#project-list')
-                json = JSON.parse(json)
+                try {
+                    json = JSON.parse(json)
+                } catch (err) {
+
+                }
                 _.forEach(json, function(projects, categoryName){
                     console.log(categoryName)
                     var categoryEntry = $('<li></li>').html(categoryName)
