@@ -1,5 +1,33 @@
 {
-    "Research and Visualization" : {
+    "Libraries": {
+        "glypy": {
+            "title": "glypy - a Glycoinformatics Toolkit for Python",
+            "link": "https://github.com/mobiusklein/glypy",
+            "comment": "A library for representing and manipulating glycan structures and compositions. Also provides I/O interfaces with common formats and repositories of glycan structures."
+        },
+        "glycopeptidepy": {
+            "title": "glycopeptidepy - a library for describing Glycopeptides in Python",
+            "link": "https://github.com/mobiusklein/glycopeptidepy",
+            "comment": "An extension of <code>glypy</code> which grew out of GlycReSoft"
+        },
+        "brainpy": {
+            "title": "brainpy - an implementation of the root-finding free version of the Bafflingly Recursive Algorithm for Isotopic distributioNs",
+            "link": "https://github.com/mobiusklein/brainpy",
+            "comment": "A library to quickly generate isotopic patterns from elemental compositions."
+        },
+        "ms_peak_picker": {
+            "title": "ms_peak_picker - Simple Peak Picking for Mass Spectrometry Data in Python",
+            "link": "https://github.com/mobiusklein/ms_peak_picker",
+            "comment": "A simple method stolen from Decon2LS and cleaned up a little, with added signal processing filters"
+        },
+        "ms_deisotope": {
+            "title": "ms_deisotope - Mass Spectrum Deisotoping and Charge State Deconvolution in Python",
+            "link": "https://github.com/mobiusklein/ms_deisotope",
+            "comment": "A library for doing all that pesky preprocessing to let you compare peaks to theoretical fragment ion masses directly."
+        }
+
+    },
+    "Visualization" : {
         "Visualize Influenza Microarray Combinatorics":{
             "title": "Visualize Influenza Microarray Combinatorics",
             "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Visualize%20Influenza%20Microarray%20Combinatorics",
@@ -8,7 +36,7 @@
         "Force Directed Regulon":{
             "title": "Force Directed Regulon",
             "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Force%20Directed%20Regulon",
-            "comment": "A class project experimenting with visualizing the Mycobacterium tuberculosis regulon for controlling metabolic state in aerobic versus anaerobic conditions"
+            "comment": "A project experimenting with visualizing the Mycobacterium tuberculosis regulon for controlling metabolic state in aerobic versus anaerobic conditions"
         },
         "Pathogen Gene Mutation Annotation Viewer for antibiotic resistance":{
             "title": "Pathogen Gene Mutation Annotation Viewer for antibiotic resistance",
@@ -18,7 +46,7 @@
         "Simulating Evolution in Competetive Organisms":{
             "title": "Simulating Evolution in Competetive Organisms",
             "link": "http://mobiusklein.github.io/Research%20and%20Visualization/Simulating%20Evolution%20in%20Competetive%20Organisms",
-            "comment": "A class project experimenting with bacterial evolution simulation involving interacting populations and environments"
+            "comment": "A project experimenting with bacterial evolution simulation involving interacting populations and environments"
         }
     },
     "One Page Web Tools": {
@@ -26,19 +54,6 @@
                 "title": "GenePopBuilder",
                 "link": "http://mobiusklein.github.io/One%20Page%20Web%20Tools/GenePopBuilder",
                 "comment": "An old, unloved population genetics file format that a friend needed a convenient data entry tool for"
-            },
-            "GlycReSoft2 MS2 Glycopeptide Viewer":{
-                "title": "GlycReSoft2 MS2 Glycopeptide Viewer",
-                "link": "http://mobiusklein.github.io/One%20Page%20Web%20Tools/GlycReSoft2%20MS2%20Glycopeptide%20Viewer",
-                "comment": "Active work on visualizing glycoproteomics data from targeted Mass Spectrometry and tandem Mass Spectrometry experiments"
             }
-    },
-    "Web Tools and Plugins":{
-        "ng-scientific-notation": {
-            "title": "ng-scientific-notation",
-            "link": "http://mobiusklein.github.io/ng-scientific-notation/",
-            "comment": "A simple Angular directive for more direct control over rendering numbers in scientific notation"
-        }
-    }    
-
+    }
 }
