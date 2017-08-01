@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Workshop 1. Introduction to Python &#8212; Foundations in Computational Skills 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="workshop-1-introduction-to-python">
+<h1>Workshop 1. Introduction to Python<a class="headerlink" href="#workshop-1-introduction-to-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaOWZUM2taYVJQeGM&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Hello, my name is Josh.</p>
+<p>These are the materials for the second workshop, workshop one.</p>
+<p>This workshop is intended to introduce you to problem-solving
+with <a class="reference external" href="http://www.python.org">python</a>. If you’re already familiar with
+some parts of the language, feel free to skip over those sections.</p>
+</div>
+</div>
+<div class="section" id="running-python-code">
+<h1>Running Python Code<a class="headerlink" href="#running-python-code" title="Permalink to this headline">¶</a></h1>
+<p>Python can be used to write executabl programs, as well as
+interactively. To start an interactive Python interpreter from
+the shell:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python
+Python 3.6.1 |Continuum Analytics, Inc.| (default, May 11 2017, 13:09:58)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>We can execute statements interactively with this program, which
+will <strong>r</strong>ead the code you write, <strong>e</strong>valuate it, and <strong>p</strong>rint
+the results, and <strong>l</strong>oop back to the beginning. This is why this
+type of program is called a <strong>REPL</strong>.</p>
+<p>The REPL will keep the results of previous statements from that
+session. We can define variables</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>Using this interactive prompt, we can treat Python like a simple desk calculator
+or as a way to write short one-off programs. To quit the interactive session,
+you can write <code class="docutils literal"><span class="pre">quit()</span></code> and press <code class="docutils literal"><span class="pre">&lt;Enter&gt;</span></code>.</p>
+<p>We can also execute files containing Python code</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">example1.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># pythagorean theorem</span>
+<span class="c1">#   |\</span>
+<span class="c1"># b | \ c</span>
+<span class="c1">#   |__\</span>
+<span class="c1">#     a</span>
+
+<span class="n">c_squared</span> <span class="o">=</span> <span class="n">a</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">b</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">c_squared</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">c_squared</span><span class="p">))</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python example1.py
+25 5
+</pre></div>
+</div>
+<p>There are other ways to run Python code, but these two methods are the ones
+that will be used for now.</p>
+<div class="section" id="builtin-types">
+<h2>Builtin Types<a class="headerlink" href="#builtin-types" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaWlowR2xhVW9xRHc&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Python has many handy built-in types, and lets you define more yourself easily.
+Here, by “type”, what I mean is “kind of thing”, not to press keys on a keyboard.
+For example, we can all agree that the 12 is a number, and that “cat” is a series
+of characters called a string and that a cat is an animal. We know we can add
+numbers together, so we can add 12 to another number like 13 and get the number
+25, but attempting to add two cats together is liable to be a messy, unpredictable
+process which computers don’t have definition for. Similarly, we can agree that the
+uppercase version of “cat” which is “CAT”, but only typographers will assert that
+there is an upper or lower case for the number 12.</p>
+<p>After all of this, I hope I’ve convinced you that types are useful enough for you to go
+read <a class="reference external" href="https://docs.python.org/3/tutorial/introduction.html#an-informal-introduction-to-python">An Informal Introduction to Python</a>
+which is a part of the official Python documentation. We will be referencing parts of
+it throughout this workshop, and it’s often the best way to learn how the language
+works.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Expected Reading Time: 15 minutes</p>
+</div>
+</div>
+<div class="section" id="a-simple-program">
+<h2>A Simple Program<a class="headerlink" href="#a-simple-program" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBadnM5MnZrWDdPSE0&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Okay, now that you’ve learned more about how to play with numbers, strings, and lists we’ll
+use these to build on the <code class="docutils literal"><span class="pre">while-loop</span></code> you saw at the end. Let’s say you have a list of numbers</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We want to count the number of times each number appears in <code class="docutils literal"><span class="pre">numbers</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You learned about the <code class="xref py py-func docutils literal"><span class="pre">len()</span></code> function in that informal introduction, it’s a function which
+returns the number of items in a container type, which a <code class="xref py py-class docutils literal"><span class="pre">list</span></code> is. So now <code class="docutils literal"><span class="pre">n</span></code> contains
+the number of items in <code class="docutils literal"><span class="pre">numbers</span></code>. We can iterate over <code class="docutils literal"><span class="pre">numbers</span></code> using a while loop like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">j</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="go">1</span>
+<span class="go">0</span>
+<span class="go">2</span>
+<span class="go">1</span>
+<span class="go">3</span>
+<span class="go">1</span>
+<span class="go">5</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">4</span>
+<span class="go">4</span>
+<span class="go">4</span>
+<span class="go">5</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>We can then use a list of the length of the largest number in <code class="docutils literal"><span class="pre">numbers</span></code> + 1 to count the number
+of times each number was seen. We have to add one to largest number because we start from zero
+instead if one.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">j</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+<span class="go">[1, 5, 2, 2, 3, 2]</span>
+</pre></div>
+</div>
+<p>This works because <code class="docutils literal"><span class="pre">j</span></code>’s value is a number which is both the thing we want
+to count and is used to find the place where we hold the count inside the <code class="docutils literal"><span class="pre">counts</span></code>
+<code class="xref py py-class docutils literal"><span class="pre">list</span></code>. This was pretty convenient and obviously only works because we’re
+counting numbers from 0 and up without many gaps. We also had to pre-fill <code class="docutils literal"><span class="pre">counts</span></code>
+with the right size, and set all of its values to 0. We’ll try to improve this
+example to be more idiomatic and less contrived.</p>
+<p>In Python, <code class="docutils literal"><span class="pre">while</span></code> loops are uncommon for a number of reasons. The primary reason
+is that if you forgot to include the line with <code class="docutils literal"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code>, your loop would run <em>forever</em>
+and never stop. Like many other languages Python has <code class="docutils literal"><span class="pre">for</span></code> loops too, but they’re
+a bit different. Instead of iterating over a user-defined start and stop condition like
+in <code class="docutils literal"><span class="pre">C</span></code>-like languages, Python’s iterates over an object in a type-specific fashion
+which means that types control how they’re traversed. In the case of sequences like
+<code class="xref py py-class docutils literal"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal"><span class="pre">str</span></code> this means they’re iterated over in order, from start to end.</p>
+<p>For more information, see <a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#for">4.2 for Statements</a>.</p>
+<p>If we were to rewrite that counting step with a <code class="docutils literal"><span class="pre">for</span></code>-loop, here’s what it
+would look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+<span class="go">[1, 5, 2, 2, 3, 2]</span>
+</pre></div>
+</div>
+<p>This simplified the code and removed the potential for you to accidentally enter
+an infinite loop. We still need to pre-initialize <code class="docutils literal"><span class="pre">counts</span></code> though. We’ll fix
+this using another loop and an <code class="docutils literal"><span class="pre">if</span></code> statement.</p>
+</div>
+<div class="section" id="if-statements">
+<h2>if Statements<a class="headerlink" href="#if-statements" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaSy1aRmdsTTUyYlU&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>An <code class="docutils literal"><span class="pre">if</span></code> statement works like the conditional expression of a <code class="docutils literal"><span class="pre">while</span></code> loop.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;b is greater than a&quot;</span><span class="p">)</span>
+<span class="go">b is greater than a</span>
+</pre></div>
+</div>
+<p>We can make those conditional expressions as complicated as we want, using
+boolean operators like <code class="docutils literal"><span class="pre">and</span></code> and <code class="docutils literal"><span class="pre">or</span></code> to combine them. We can also
+specify</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a, b, and c are Pythagorean triples!&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;crude failures of numbers&quot;</span><span class="p">)</span>
+<span class="go">a, b, and c are Pythagorean triples!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a, b, and c are Pythagorean triples!&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;crude failures of numbers&quot;</span><span class="p">)</span>
+<span class="go">crude failures of numbers</span>
+</pre></div>
+</div>
+<p>You can read more about <code class="docutils literal"><span class="pre">if</span></code> statements at <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">4.1 if Statements</a> and
+the boolean operators at <a class="reference external" href="https://docs.python.org/3/reference/expressions.html#boolean-operations">6.11 Boolean operations</a>.</p>
+</div>
+<div class="section" id="simplifying-solution">
+<h2>Simplifying Solution<a class="headerlink" href="#simplifying-solution" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaazlzQUJUTmFtWVU&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Now, to solve our problem,</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">difference</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">difference</span><span class="p">):</span>
+<span class="gp">... </span>            <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, the <code class="docutils literal"><span class="pre">range</span></code> function returns an object which when iterated over,
+produces numbers from 0 to the first argument (non-inclusive). Alternatively,
+if given two arguments, it will produce numbers starting from the first
+argument up to the second argument.</p>
+<p>We can solve this even more simply by using another builtin function <code class="docutils literal"><span class="pre">max</span></code>.
+<code class="docutils literal"><span class="pre">max</span></code> will return the largest value in an iterable object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is another builtin function called <code class="docutils literal"><span class="pre">min</span></code> which does the opposite,
+returning the smallest value in an iterable object.</p>
+<p>Now, the simplified program looks like</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-functions">
+<h2>Defining Functions<a class="headerlink" href="#defining-functions" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaU3gybUlnVV9ac2s&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>With our simplified solution, we can now count numbers with very few lines of
+code, but we still need to repeat those lines every time we want to count a list
+of numbers. This isn’t ideal if we have a problem where we need to do this a lot.</p>
+<p>We can create a function which contains all of that logic, giving it a name, and
+just call that function whenever we want to do that task. For an explanation of
+how this is done, please read <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Defining Functions</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Expected reading time: 5 minutes</p>
+</div>
+<p>Now, to take what you just read and apply it here, we define the input to the function,
+a list of numbers, and the output of the function, a list of counts.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_numbers</span><span class="p">(</span><span class="n">number_series</span><span class="p">):</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">number_series</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">number_series</span><span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">counts</span>
+</pre></div>
+</div>
+<p>Note that the variables inside the function don’t refer to the variables from previous
+examples, even if they share the same name. This is because they have different scopes.
+It is possible for names within an inner scope to reference variables from an outer scope,
+but this should be used sparingly, as this introduces a logical dependence between the
+two pieces of code which is not easy to see.</p>
+<p>We can show our function works by calling it on our list of numbers and seeing it gives
+the same answer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count_numbers</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="go">[1, 5, 2, 2, 3, 2]</span>
+</pre></div>
+</div>
+<p>For more on defining functions, including fancier ways of passing arguments, see <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions">More on
+Defining Functions</a></p>
+</div>
+<div class="section" id="more-on-types-and-iteration">
+<h2>More On Types and Iteration<a class="headerlink" href="#more-on-types-and-iteration" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBacnZTMG1wVDF4LVU&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>I’ve been saying this word “iterate” a lot. It comes from the Latin “iterum”
+meaning “again”, and in mathematics and computer science it is used when we
+want to repeat a process again and again. A for-loop is one form of iteration.</p>
+<p>In Python, types can define how they are iterated over. As we saw before, <code class="xref py py-class docutils literal"><span class="pre">list</span></code>
+objects are iterated over in order, and the same goes for <code class="xref py py-class docutils literal"><span class="pre">str</span></code> and <code class="xref py py-class docutils literal"><span class="pre">tuple</span></code>,
+even though these types are meant to represent different things. This is because
+these types are all examples of <code class="xref py py-class docutils literal"><span class="pre">Sequence</span></code> types or more specifically, these
+types all implement the <code class="xref py py-class docutils literal"><span class="pre">Sequence</span></code> interface. A <code class="xref py py-class docutils literal"><span class="pre">Sequence</span></code> supports
+the following operations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Item Getting</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="n">somevalue</span>
+
+<span class="c1"># Testing for Membership</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sequence</span>
+<span class="bp">True</span><span class="o">/</span><span class="bp">False</span>
+
+<span class="c1"># Size-able</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+<span class="n">integer</span>
+</pre></div>
+</div>
+<p>Because of the first and third property, iterability is implicitly just</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)):</span>
+    <span class="k">yield</span> <span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can read more about this interface at <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range">Sequence Types</a></p>
+<p>Because Python is not staticly typed, we can use those <code class="xref py py-class docutils literal"><span class="pre">Sequence</span></code> types
+interchange-ably.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+<span class="gp">... </span>   <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The sequence of values inside parentheses defines a tuple</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s2">&quot;abc&quot;</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+</pre></div>
+</div>
+<p>There are many other types in Python which support iteration, such as <code class="xref py py-class docutils literal"><span class="pre">set</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">dict</span></code>, and <code class="xref py py-class docutils literal"><span class="pre">file</span></code>, but iteration over objects of these types is not
+always the same.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">No matter the type of the object you’re iterating over, you should not and
+usually <em>cannot</em> modify the object while iterating. Common builtin types
+will throw an error. If you need to modify the object you’re iterating over,
+first make a copy of the object, and then iterate over the copy and modify
+the original as needed.</p>
+</div>
+<p>Whenever you use a <code class="docutils literal"><span class="pre">for</span></code> loop, Python implicitly calls the <code class="xref py py-func docutils literal"><span class="pre">iter()</span></code> function
+on the object being iterated over. <code class="xref py py-func docutils literal"><span class="pre">iter()</span></code> returns a <code class="xref py py-class docutils literal"><span class="pre">Iterator</span></code> for the
+object being iterated. <code class="xref py py-class docutils literal"><span class="pre">Iterator</span></code> objects can be used to retrieve successive
+items from the thing they iterate over using the <code class="xref py py-func docutils literal"><span class="pre">next()</span></code> function. If <code class="xref py py-func docutils literal"><span class="pre">next()</span></code>
+is called and no new data are available, a <code class="xref py py-class docutils literal"><span class="pre">StopIteration</span></code> exception will be
+raised. The <code class="docutils literal"><span class="pre">for</span></code> loop automatically handles the exception, but you’re calling <code class="xref py py-func docutils literal"><span class="pre">next()</span></code>
+directly, you’ll need to be prepared to handle the exception yourself.</p>
+</div>
+<div class="section" id="dictionaries">
+<h2>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dictionaries are very important, make sure you try out some of this code
+if you’re unfamiliar with them!</p>
+</div>
+<p>Dictionaries, or <code class="xref py py-class docutils literal"><span class="pre">dict</span></code> as they’re written in Python, are incredibly powerful
+data structures. They allow you to associate “key” objects with “value” objects, forming
+key-value pairs. This lets you create names for values, flexibly relate arbitrary data
+together and make it easy to locate information without complicated indexing schemes.</p>
+<p>This process usually involves a <strong>hash</strong> function, and requires
+that the “key” objects be <code class="xref py py-class docutils literal"><span class="pre">Hashable</span></code> and comparable. Usually, this requires
+that the “key” be immutable, a property that <code class="xref py py-class docutils literal"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal"><span class="pre">int</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">float</span></code>, and <code class="xref py py-class docutils literal"><span class="pre">tuple</span></code> posses.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="go"># alternative syntax for a dictionary literal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="go"># set the value of the key &quot;string key&quot; to the value &quot;green eggs and spam&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[</span><span class="s2">&quot;string key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;green eggs and spam&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">lookup</span><span class="p">)</span>
+<span class="go">{&quot;string key&quot;: &quot;green eggs and spam&quot;}</span>
+<span class="go"># set the value of the key 55 to the value [1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[</span><span class="mi">55</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go"># Get the value associated with the key 55</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[</span><span class="mi">55</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+<span class="go"># mutable objects like lists cannot be keys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">unhashable type: &#39;list&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go"># tuples are immutable, and can be keys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="go"># getting a key with square braces that doesn&#39;t exist throws</span>
+<span class="go"># an error</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">[</span><span class="s2">&quot;not a key&quot;</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">KeyError</span>: <span class="n">&#39;not a key&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go"># using the `get` method of a dict will return None if the key</span>
+<span class="go"># is missing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;not a key&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">None</span>
+<span class="go">True</span>
+<span class="go"># the second argument to `get` is an optional default value to</span>
+<span class="go"># return instead</span>
+<span class="go"># of `None` when the key is missing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;not a key&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="mi">42</span>
+<span class="go"># using membership testing checks to see if a value a  key in</span>
+<span class="go"># this dictionary</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="ow">in</span> <span class="n">lookup</span>
+<span class="go">True</span>
+<span class="go"># iterating over a dictionary yields its keys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">lookup</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">[&#39;string key&#39;, 55, (4, 5)]</span>
+<span class="go"># the `keys` method returns a &quot;view&quot; of the keys that can be</span>
+<span class="go"># iterated over</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">dict_keys([&#39;string key&#39;, 55, (4, 5)])</span>
+<span class="go"># the `values` method returns a &quot;view&quot; of the values that can</span>
+<span class="go"># be iterated over</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="go">dict_values([&#39;green eggs and spam&#39;, [1, 2, 3], 5])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go"># the `items` method returns a view over the key-value pairs.</span>
+<span class="go"># This is a very common way way to iterate over a dictionary!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="go">dict_items([(&#39;string key&#39;, &#39;green eggs and spam&#39;), (55, [1, 2, 3]), ((4, 5), 5)])</span>
+</pre></div>
+</div>
+<p>They go by many names, like “associative array”, “hash”, “hash table” or “map”
+in other languages.</p>
+</div>
+<div class="section" id="more-data-structures">
+<h2>More Data Structures<a class="headerlink" href="#more-data-structures" title="Permalink to this headline">¶</a></h2>
+<p>Python’s builtin data structures are one of its strengths. They are the building blocks
+of any program, and understanding what they can do lets you choose the right tool for
+each job you encounter.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">More on Lists</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">Tuples and Sequences</a></li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str">Strings</a> and <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#string-methods">Their Methods</a>. There are many string methods with niche uses. The important ones are:</dt>
+<dd><ol class="first last loweralpha">
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.endswith">endswith</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.format">format</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.replace">replace</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.split">split</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.startswith">startswith</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.strip">strip</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.encode">encode</a>. This method touches on the sticky subject of
+<code class="xref py py-class docutils literal"><span class="pre">str</span></code> vs <code class="xref py py-class docutils literal"><span class="pre">bytes</span></code>, something you don’t need to know much about just yet.</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#sets">Sets</a></li>
+<li><a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">Dictionaries</a></li>
+</ol>
+<p>There are also many more examples of how they’re used in <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#looping-techniques">Looping Techniques</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Expected Reading Time: 15 minutes</p>
+</div>
+</div>
+<div class="section" id="file-i-o">
+<h2>File I/O<a class="headerlink" href="#file-i-o" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaMnlQR2FlM1BYMVE&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Data File: <a class="reference external" href="https://drive.google.com/uc?id=0B6adxGixQdBaZ3k1bVp0R24yMWc&amp;authuser=2&amp;export=download">“data.txt”</a></p>
+<p>There comes a day in every programmer’s life where they simply have to ask for information
+from the outside world, and that usually takes the form of reading files in, and then writing
+a file back out to tell the world what they’ve done.</p>
+<p>In Python, you open a file using <code class="xref py py-obj docutils literal"><span class="pre">open(path,</span> <span class="pre">mode)</span></code>, where <code class="docutils literal"><span class="pre">path</span></code> refers to the path
+to the file you wish to open, and <code class="docutils literal"><span class="pre">mode</span></code> refers to how you want the file to be opened, as
+specified by a common string pattern:</p>
+<ul class="simple">
+<li>“r”: open for reading in text mode. Error if the file does not exist. This is the default mode.</li>
+<li>“w”: open for writing in text mode. Destroys any existing content</li>
+<li>“a”: open for appending in text mode. All new content is written to the end of the existing content</li>
+</ul>
+<p>If a “b” is appended to the mode string, it means that the file is opened in binary mode,
+which causes all of the methods we’ll cover to return <code class="xref py py-class docutils literal"><span class="pre">bytes</span></code> objects instead of <code class="xref py py-class docutils literal"><span class="pre">str</span></code>
+objects. For now, we’ll ignore this and only deal with text mode.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">contents</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+<span class="go">Alice Low bandwidth caused a bottleneck in networking</span>
+<span class="go">John  Excess fruit consumption suspected to cause cancer</span>
+<span class="go">Bob   Failure to communicate induced by person standing inbetween self and recipient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Whenever you open a file, it is important to remember to close it when you
+are done. It’s more important when writing to a file because some or all of
+the content you wrote to the file may not actually be written out until the
+file is closed. If your program structure lets you, it’s better to open a file
+using a <code class="docutils literal"><span class="pre">with</span></code> block (shown below).</p>
+<p>Files can also be iterated over, yielding lines sequentially.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># There will be an extra blank line between lines as both the</span>
+<span class="gp">... </span>        <span class="c1"># newline added by print() and the one at the end of the line</span>
+<span class="gp">... </span>        <span class="c1"># are shown</span>
+<span class="gp">... </span>        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="go">Alice Low bandwidth caused a bottleneck in networking</span>
+
+<span class="go">John  Excess fruit consumption suspected to cause cancer</span>
+
+<span class="go">Bob   Failure to communicate induced by person standing inbetween self and recipient</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># f.close() is called as soon as the with block is over</span>
+</pre></div>
+</div>
+<p><code class="xref py py-class docutils literal"><span class="pre">file</span></code> objects are their own <code class="xref py py-class docutils literal"><span class="pre">Iterators</span></code>, so you can call <code class="xref py py-func docutils literal"><span class="pre">next()</span></code> directly
+on them to retrieve successive lines, or more explicitly, you can call the <code class="xref py py-meth docutils literal"><span class="pre">readline()</span></code> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="go">Alice Low bandwidth caused a bottleneck in networking</span>
+
+<span class="go">John  Excess fruit consumption suspected to cause cancer</span>
+
+<span class="go">Bob   Failure to communicate induced by person standing inbetween self and recipient</span>
+</pre></div>
+</div>
+<p>These methods can be used even while looping over the file using a <code class="docutils literal"><span class="pre">for</span></code> loop to work with
+more than one line at a time, though care must be used when calling <code class="xref py py-func docutils literal"><span class="pre">next()</span></code> repeatedly.</p>
+<p>We can combine some of the things we’ve learend to do things with the contents of this file.
+The first thing we can do is to just recapitulate the element counting task we did earlier on
+a list of numbers using the characters for each line of this file. Instead of using a list to
+store the counts, we need to use something that can connect elements of a <code class="xref py py-class docutils literal"><span class="pre">str</span></code> to
+a number, so we’ll use <code class="xref py py-class docutils literal"><span class="pre">dict</span></code> (there’s a better subclass of dict that we could use in
+the collections module, but that’s a story for another time).</p>
+<p>Let’s also associate the count with the person’s name at the start of the line, omitting it
+from the count.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counters_per_line</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># split the line on spaces to separate the name</span>
+<span class="gp">... </span>        <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">name</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">counter</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">... </span>        <span class="c1"># slice from the 1st element forward to skip the name</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+<span class="gp">... </span>            <span class="c1"># iterate over the individual letters</span>
+<span class="gp">... </span>            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+<span class="gp">... </span>                <span class="c1"># retreive the current count or 0 if missing</span>
+<span class="gp">... </span>                <span class="n">current</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span>                <span class="c1"># store the updated value</span>
+<span class="gp">... </span>                <span class="n">counter</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">... </span>        <span class="c1"># store the counts for this line under the associated name</span>
+<span class="gp">... </span>        <span class="n">counters_per_line</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">counter</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">counters_per_line</span><span class="p">)</span>
+<span class="go">{&#39;Bob&#39;: {&#39;a&#39;: 4, &#39;c&#39;: 4, &#39;b&#39;: 2, &#39;e&#39;: 10, &#39;d&#39;: 4, &#39;g&#39;: 1, &#39;F&#39;: 1, &#39;i&#39;: 7, &#39;f&#39;: 1, &#39;m&#39;: 2, &#39;l&#39;: 2, &#39;o&#39;: 3, &#39;n&#39;: 9, &#39;p&#39;: 2, &#39;s&#39;: 3, &#39;r&#39;: 3, &#39;u&#39;: 3, &#39;t&#39;: 5, &#39;w&#39;: 1, &#39;y&#39;: 1}, &#39;John&#39;: {&#39;a&#39;: 2, &#39;c&#39;: 6, &#39;E&#39;: 1, &#39;d&#39;: 1, &#39;f&#39;: 1, &#39;i&#39;: 2, &#39;\n&#39;: 1, &#39;m&#39;: 1, &#39;o&#39;: 3, &#39;n&#39;: 3, &#39;p&#39;: 2, &#39;s&#39;: 6, &#39;r&#39;: 2, &#39;u&#39;: 4, &#39;t&#39;: 4, &#39;x&#39;: 1, &#39;e&#39;: 5}, &#39;Alice&#39;: {&#39;a&#39;: 3, &#39;c&#39;: 2, &#39;b&#39;: 2, &#39;e&#39;: 4, &#39;d&#39;: 3, &#39;g&#39;: 1, &#39;i&#39;: 3, &#39;h&#39;: 1, &#39;k&#39;: 2, &#39;\n&#39;: 1, &#39;L&#39;: 1, &#39;o&#39;: 3, &#39;n&#39;: 5, &#39;s&#39;: 1, &#39;r&#39;: 1, &#39;u&#39;: 1, &#39;t&#39;: 4, &#39;w&#39;: 3, &#39;l&#39;: 1}}</span>
+</pre></div>
+</div>
+<p>Now that we have these letter counts for each line, we can write them out to a new file
+organized in a meaningful way. Let’s define the format to be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="p">:</span>
+\<span class="n">t</span><span class="o">&lt;</span><span class="n">letter</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">count</span><span class="o">&gt;</span>\<span class="n">n</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>To write content to a file opened for writing text, we use the <code class="xref py py-meth docutils literal"><span class="pre">file.write()</span></code> method, which
+takes a <code class="xref py py-class docutils literal"><span class="pre">str</span></code> as an argument. <code class="docutils literal"><span class="pre">write</span></code> doesn’t assume you’re passing it a complete line,
+so you’ll need to include the newline character <code class="docutils literal"><span class="pre">\n</span></code> yourself when you’re done with a line.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">counts</span> <span class="ow">in</span> <span class="n">counters_per_line</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">letter</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="gp">... </span>            <span class="c1"># convert count from an int into a str so it can be written</span>
+<span class="gp">... </span>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+<span class="gp">... </span>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span>            <span class="c1"># or alternatively use a format string to do everything in one go:</span>
+<span class="gp">... </span>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">{letter}:{count}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">letter</span><span class="o">=</span><span class="n">letter</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The contents of “output.txt” will be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Bob</span>
+    <span class="n">a</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">c</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">b</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">e</span><span class="p">:</span><span class="mi">10</span>
+    <span class="n">d</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">g</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">F</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">i</span><span class="p">:</span><span class="mi">7</span>
+    <span class="n">f</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">m</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">l</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">n</span><span class="p">:</span><span class="mi">9</span>
+    <span class="n">p</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">s</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">r</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">u</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">t</span><span class="p">:</span><span class="mi">5</span>
+    <span class="n">w</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">y</span><span class="p">:</span><span class="mi">1</span>
+
+<span class="n">John</span>
+    <span class="n">a</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">c</span><span class="p">:</span><span class="mi">6</span>
+    <span class="n">E</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">d</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">f</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">i</span><span class="p">:</span><span class="mi">2</span>
+
+<span class="p">:</span><span class="mi">1</span>
+    <span class="n">m</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">n</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">p</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">s</span><span class="p">:</span><span class="mi">6</span>
+    <span class="n">r</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">u</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">t</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">x</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">e</span><span class="p">:</span><span class="mi">5</span>
+
+<span class="n">Alice</span>
+    <span class="n">a</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">c</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">b</span><span class="p">:</span><span class="mi">2</span>
+    <span class="n">e</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">d</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">g</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">i</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">h</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">k</span><span class="p">:</span><span class="mi">2</span>
+
+<span class="p">:</span><span class="mi">1</span>
+    <span class="n">L</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">n</span><span class="p">:</span><span class="mi">5</span>
+    <span class="n">s</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">r</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">u</span><span class="p">:</span><span class="mi">1</span>
+    <span class="n">t</span><span class="p">:</span><span class="mi">4</span>
+    <span class="n">w</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">l</span><span class="p">:</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>This is exactly what we said to do, but after seeing the results, we can see a few things
+that may not make sense. The first is that there are blank lines followed by a line starting
+in the wrong place without a letter and just a “:1”. This is because the newline character was
+also counted. We could omit the newlines by checking for them in the inner-most loop. The second
+thing is that the uppercase and lowercase letters are counted separately. Supposing we don’t want
+this, we would need to redo the counting process to fix it.</p>
+<p>The revised counting code would look like this, after we wrap it up in a function</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">example3.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_letters_per_line</span><span class="p">(</span><span class="n">line_file</span><span class="p">):</span>
+    <span class="n">counters_per_line</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">line_file</span><span class="p">:</span>
+
+        <span class="c1"># remove the trailing newline and</span>
+        <span class="c1"># split the line on spaces to separate the name</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># slice from the 1st element forward to skip the name</span>
+        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+
+                <span class="c1"># force the character to be lowercase</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                <span class="c1"># retreive the current count or 0 if missing</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">counter</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">counters_per_line</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">counter</span>
+    <span class="k">return</span> <span class="n">counters_per_line</span>
+
+<span class="k">def</span> <span class="nf">write_output</span><span class="p">(</span><span class="n">counters</span><span class="p">,</span> <span class="n">result_file</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">counts</span> <span class="ow">in</span> <span class="n">counters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">result_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">{letter}:{count}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">letter</span><span class="o">=</span><span class="n">letter</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">))</span>
+        <span class="n">result_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>If you want to know more about reading and writing files, please see <a class="reference external" href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">Reading and Writing Files</a> for more information.</p>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBaaXZFSEhaWUFscE0&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Since we’ve organized these into functions, where input and output are defined by whoever calls
+them, we don’t need them to share the same scope as the input we want to call them with. We can
+move them into a “module”, which is the word for a file which contains Python code that will be
+“imported” and used elsewhere. To do this, we just create a file, let’s call it “line_parser.py”
+and put the code for these functions in it and save the file.</p>
+<p>Now, back in our interactive session, we can just “import” the module by name. This creates a new
+<code class="xref py py-class docutils literal"><span class="pre">module</span></code> object which just provides all the names defined inside it as attributes. We can
+call those functions defined within using the same attribute access notation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">line_parser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">counts</span> <span class="o">=</span> <span class="n">line_parser</span><span class="o">.</span><span class="n">count_letters_per_line</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">dict_keys([&#39;Alice&#39;, &#39;John&#39;, &#39;Bob&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">line_parser</span><span class="o">.</span><span class="n">write_output</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="go">Alice</span>
+<span class="go">        l:2</span>
+<span class="go">        o:3</span>
+<span class="go">        w:3</span>
+<span class="go">        b:2</span>
+<span class="go">        a:3</span>
+<span class="go">        n:5</span>
+<span class="go">        d:3</span>
+<span class="go">        i:3</span>
+<span class="go">        t:4</span>
+<span class="go">        h:1</span>
+<span class="go">        c:2</span>
+<span class="go">        u:1</span>
+<span class="go">        s:1</span>
+<span class="go">        e:4</span>
+<span class="go">        k:2</span>
+<span class="go">        r:1</span>
+<span class="go">        g:1</span>
+
+<span class="go">John</span>
+<span class="go">        e:6</span>
+<span class="go">        x:1</span>
+<span class="go">        c:6</span>
+<span class="go">        s:6</span>
+<span class="go">        f:1</span>
+<span class="go">        r:2</span>
+<span class="go">        u:4</span>
+<span class="go">        i:2</span>
+<span class="go">        t:4</span>
+<span class="go">        o:3</span>
+<span class="go">        n:3</span>
+<span class="go">        m:1</span>
+<span class="go">        p:2</span>
+<span class="go">        d:1</span>
+<span class="go">        a:2</span>
+
+<span class="go">Bob</span>
+<span class="go">        f:2</span>
+<span class="go">        a:4</span>
+<span class="go">        i:7</span>
+<span class="go">        l:2</span>
+<span class="go">        u:3</span>
+<span class="go">        r:3</span>
+<span class="go">        e:10</span>
+<span class="go">        t:5</span>
+<span class="go">        o:3</span>
+<span class="go">        c:4</span>
+<span class="go">        m:2</span>
+<span class="go">        n:9</span>
+<span class="go">        d:4</span>
+<span class="go">        b:2</span>
+<span class="go">        y:1</span>
+<span class="go">        p:2</span>
+<span class="go">        s:3</span>
+<span class="go">        g:1</span>
+<span class="go">        w:1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="executing-scripts-with-arguments-from-the-command-line">
+<h2>Executing Scripts with Arguments from the Command Line<a class="headerlink" href="#executing-scripts-with-arguments-from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<video
+    src="https://drive.google.com/uc?id=0B6adxGixQdBacThpaENwSHhUQ2c&authuser=2&export=download"
+    width="656px" autobuffer controls>
+</video><p>Once we make a program that can take arguments, we might want to run the program using user-provided
+data without modifying the program from run to run. To do this, we can read the arguments from
+the command line using the same patterns you saw in workshop 0.</p>
+<p>In order to access the command line arguments in python, we need to import another module from
+the Python standard library, called <code class="docutils literal"><span class="pre">sys</span></code>. The <code class="docutils literal"><span class="pre">sys</span></code> module contains lots of functions related
+to the Python runtime, but the feature we’re interested in is <code class="xref py py-attr docutils literal"><span class="pre">sys.argv</span></code>, which is a list of
+the command line arguments.</p>
+<p>If we create an example file called <code class="docutils literal"><span class="pre">cli.py</span></code> with the contents:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">cli.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>and then run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python cli.py arg1 arg2 arg3
+</pre></div>
+</div>
+<p>We’ll see the output:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;cli.py&#39;</span><span class="p">,</span> <span class="s1">&#39;arg1&#39;</span><span class="p">,</span> <span class="s1">&#39;arg2&#39;</span><span class="p">,</span> <span class="s1">&#39;arg3&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">sys.argv[0]</span></code> is always the name of the script, and successive arguments are those
+parsed by the shell.</p>
+<p>To wire together our line parsing code with command line arguments, we’ll create a program
+of the form</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ &lt;program&gt; &lt;inputfile&gt; &lt;outputfile&gt;
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">parse_lines.py</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">line_parser</span>
+
+<span class="n">inputfile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">outputfile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">line_parser</span><span class="o">.</span><span class="n">count_letters_per_line</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">line_parser</span><span class="o">.</span><span class="n">write_output</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Now, we can run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python parse_lines.py data.txt output.txt
+$ cat output.txt
+</pre></div>
+</div>
+<p>and we’ll get the result:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alice</span>
+        <span class="n">l</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">w</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">b</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">a</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">n</span><span class="p">:</span><span class="mi">5</span>
+        <span class="n">d</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">i</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">t</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">h</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">c</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">u</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">s</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">e</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">k</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">r</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">g</span><span class="p">:</span><span class="mi">1</span>
+
+<span class="n">John</span>
+        <span class="n">e</span><span class="p">:</span><span class="mi">6</span>
+        <span class="n">x</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">c</span><span class="p">:</span><span class="mi">6</span>
+        <span class="n">s</span><span class="p">:</span><span class="mi">6</span>
+        <span class="n">f</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">r</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">u</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">i</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">t</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">n</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">m</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">p</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">d</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">a</span><span class="p">:</span><span class="mi">2</span>
+
+<span class="n">Bob</span>
+        <span class="n">f</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">a</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">i</span><span class="p">:</span><span class="mi">7</span>
+        <span class="n">l</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">u</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">r</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">e</span><span class="p">:</span><span class="mi">10</span>
+        <span class="n">t</span><span class="p">:</span><span class="mi">5</span>
+        <span class="n">o</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">c</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">m</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">n</span><span class="p">:</span><span class="mi">9</span>
+        <span class="n">d</span><span class="p">:</span><span class="mi">4</span>
+        <span class="n">b</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">y</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">p</span><span class="p">:</span><span class="mi">2</span>
+        <span class="n">s</span><span class="p">:</span><span class="mi">3</span>
+        <span class="n">g</span><span class="p">:</span><span class="mi">1</span>
+        <span class="n">w</span><span class="p">:</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-file-objects">
+<h2>Other File objects<a class="headerlink" href="#other-file-objects" title="Permalink to this headline">¶</a></h2>
+<p>If we wanted to always dump the output to STDOUT, we don’t need
+to rewrite <code class="docutils literal"><span class="pre">line_parser</span></code>, just pass a different file. <code class="docutils literal"><span class="pre">sys.stdout</span></code> is
+a file-like object, in that it supports all of the methods of a <code class="xref py py-class docutils literal"><span class="pre">file</span></code> does,
+and is opened in text-mode. All text sent to the terminal from the program is written to
+it to reach the screen. We can pass it to <code class="xref py py-func docutils literal"><span class="pre">line_parser.write_output()</span></code> it will be
+displayed directly without any extra effort.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">parse_lines2.py</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">line_parser</span>
+
+<span class="n">inputfile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">line_parser</span><span class="o">.</span><span class="n">count_letters_per_line</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">line_parser</span><span class="o">.</span><span class="n">write_output</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>and run</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ python parse_lines2.py data.txt
+</pre></div>
+</div>
+<p>and we’ll receive the same output without needing run <code class="docutils literal"><span class="pre">cat</span></code> or use <code class="docutils literal"><span class="pre">print</span></code></p>
+<p>This is useful because lots of other sources can provide us with streams of text
+or binary data other than just plain old files on the hard drive.</p>
+</div>
+<div class="section" id="more-parsing">
+<h2>More Parsing<a class="headerlink" href="#more-parsing" title="Permalink to this headline">¶</a></h2>
+<p>Below is some code to parse the output format we created in the previous section.
+It exercises some more methods of builtin types you may have read about, and shows
+you how to build a stateful file parser.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">reparse.py</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reparse</span><span class="p">(</span><span class="n">input_file</span><span class="p">):</span>
+    <span class="c1"># dict to hold all sections going from name -&gt; section</span>
+    <span class="n">sections</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># dict to hold all the letter counts from the current section</span>
+    <span class="n">current_section</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># the name of the current section</span>
+    <span class="n">current_name</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">input_file</span><span class="p">:</span>
+        <span class="c1"># strip only right side white space as the left side matters</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="c1"># a line starting with tab must mean we&#39;re on a line</span>
+        <span class="c1"># with a count. We assume no sane name starts</span>
+        <span class="c1"># with a tab character, of course.</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="c1"># split on the : character to separate the number from</span>
+            <span class="c1"># the letter</span>
+            <span class="n">tab_letter</span><span class="p">,</span> <span class="n">number</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="c1"># convert number str to int</span>
+            <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+            <span class="c1"># remove the leading tab character from the letter</span>
+            <span class="n">letter</span> <span class="o">=</span> <span class="n">tab_letter</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="c1"># store this letter-count pair in the current section</span>
+            <span class="c1"># dict</span>
+            <span class="n">current_section</span><span class="p">[</span><span class="n">letter</span><span class="p">]</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="c1"># a blank line means we&#39;ve finished a section</span>
+        <span class="k">elif</span> <span class="n">line</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="c1"># idiom: never compare to None with == or !=, use identity</span>
+            <span class="c1"># testing with is and is not</span>
+            <span class="k">if</span> <span class="n">current_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c1"># save the current section by its name</span>
+                <span class="c1"># and prepare for a new section</span>
+                <span class="n">sections</span><span class="p">[</span><span class="n">current_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_section</span>
+                <span class="n">current_section</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">current_name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># we must have arrived at a new name</span>
+            <span class="n">current_name</span> <span class="o">=</span> <span class="n">line</span>
+    <span class="k">return</span> <span class="n">sections</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>This code might be used as a template for work you’ll do during the workshop activities.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Foundations in Computational Skills</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../00_cli_basics/00_cli_basics.html">Workshop 0 - CLI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Workshop 1. Introduction to Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#running-python-code">Running Python Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_seq_process_app/02_seq_process_app_workshop.html">Workshop 2 - NGS 1</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../00_cli_basics/00_cli_basics.html" title="previous chapter">Workshop 0. Basic Linux and Command Line Usage: Online Materials</a></li>
+      <li>Next: <a href="../02_seq_process_app/02_seq_process_app_workshop.html" title="next chapter">Workshop 2. High Throughput Sequencing Application Session</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Adam Labadorf.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/content/workshops/01_python/01_python_script.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
