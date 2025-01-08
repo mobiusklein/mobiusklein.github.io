@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800"
+   height="550"
+   viewBox="0 -0.5 17 11.6875"
+   version="1.1"
+   class="si-glyph si-glyph-signal-3"
+   id="svg10"
+   sodipodi:docname="signal-3-svgrepo-com.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.52"
+     inkscape:cx="91.346154"
+     inkscape:cy="404.80769"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <title
+     id="title2">1014</title>
+  <defs
+     id="defs4" />
+  <g
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     id="g8"
+     transform="translate(-0.57211538,-2.2475961)">
+    <path
+       d="m 17,12.965 h -2 c -0.432,0 -0.812,-0.275 -0.948,-0.684 L 12.998,9.19 11.944,12.281 c -0.136,0.408 -0.517,0.684 -0.948,0.684 H 8.998 c -0.449,0 -0.844,-0.3 -0.964,-0.732 L 6.499,6.769 4.964,12.233 C 4.844,12.666 4.449,12.965 4,12.965 H 1 V 11.031 H 3.24 L 5.535,2.763 C 5.655,2.33 6.049,2.031 6.499,2.031 c 0.448,0 0.844,0.3 0.964,0.732 l 2.295,8.268 h 0.518 l 1.773,-5.316 c 0.137,-0.408 0.518,-0.684 0.949,-0.684 0.431,0 0.812,0.275 0.948,0.684 l 1.774,5.316 H 17 Z"
+       fill="#434343"
+       class="si-glyph-fill"
+       id="path6" />
+  </g>
+  <metadata
+     id="metadata829">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>1014</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

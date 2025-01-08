@@ -1,0 +1,155 @@
+[
+  {
+    "language": ["python", "c"],
+    "type": ["library"],
+    "name": "glypy",
+    "mode": "maintenance",
+    "repository": "https://github.com/mobiusklein/glypy",
+    "tags": [],
+    "comment": "A library for representing and manipulating glycan structures and compositions. Also provides I/O interfaces with common formats and repositories of glycan structures."
+  },
+  {
+    "language": ["python", "c"],
+    "type": ["library"],
+    "name": "glycopeptidepy",
+    "mode": "maintenance",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/glycopeptidepy",
+    "comment": "An extension of `glypy` for modeling glycopeptides"
+  },
+  {
+    "language": ["python", "c"],
+    "type": ["library"],
+    "name": "brainpy",
+    "mode": "maintenance",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/brainpy",
+    "comment": "A library to quickly generate isotopic patterns from elemental compositions."
+  },
+  {
+    "language": ["python", "c"],
+    "type": ["library"],
+    "name": "ms_peak_picker",
+    "mode": "maintenance",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/ms_peak_picker",
+    "comment": "A simple method adapted from Decon2LS for peak picking of mass spectra and cleaned up a little, with added signal processing filters"
+  },
+  {
+    "language": ["python", "c"],
+    "type": ["library", "executable"],
+    "name": "ms_deisotope",
+    "mode": "maintenance",
+    "tags": ["dissertation"],
+    "repository": "https://github.com/mobiusklein/ms_deisotope",
+    "comment": "Mass spectrum deisotoping and charge state deconvolution toolkit."
+  },
+  {
+    "language": ["python"],
+    "type": ["library"],
+    "name": "psims",
+    "mode": "maintenance",
+    "tags": ["psi"],
+    "repository": "https://github.com/mobiusklein/psims",
+    "comment": "A declarative writer for mzML, mzMLb and mzIdentML formats."
+  },
+  {
+    "language": ["python", "c", "javascript"],
+    "type": ["library", "executable"],
+    "name": "glycresoft",
+    "mode": "maintenance",
+    "tags": ["dissertation"],
+    "repository": "https://github.com/mobiusklein/glycresoft",
+    "comment": "A LC-MS/MS search engine for glycans and glycopeptides."
+  },
+  {
+    "language": ["python", "c"],
+    "type": ["library", "executable"],
+    "name": "glycopeptide_feature_learning",
+    "mode": "maintenance",
+    "tags": ["dissertation"],
+    "repository": "https://github.com/mobiusklein/glycopeptide_feature_learning",
+    "comment": "A plugin for `glycresoft` that includes a multinomial glycopeptide fragment intensity model and a \"simple\" Bayesian fragmentation modeling framework."
+  },
+  {
+    "language": ["python"],
+    "type": ["library", "executable"],
+    "name": "mzspeclib-py",
+    "mode": "active",
+    "tags": ["psi"],
+    "repository": "https://github.com/HUPO-PSI/mzspeclib-py",
+    "comment": "An implementation of the HUPO-PSI [mzSpecLib](https://pubs.acs.org/doi/full/10.1021/acs.analchem.4c04091) format"
+  },
+  {
+    "language": ["rust"],
+    "type": ["library"],
+    "name": "chemical_elements",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/chemical_elements",
+    "comment": "Chemical compositions, formula parsing and isotopic pattern generation."
+  },
+  {
+    "language": ["rust"],
+    "type": ["library"],
+    "name": "mzpeaks",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mzpeaks",
+    "comment": "Representations of peaks and features for mass spectrometry data, and searchable collections there-of."
+  },
+  {
+    "language": ["rust"],
+    "type": ["library"],
+    "name": "mzsignal",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mzsignal",
+    "comment": "Signal processing, peak picking, and feature extraction for mass spectrometry data."
+  },
+  {
+    "language": ["rust"],
+    "type": ["library"],
+    "name": "mzdata",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mzpeaks",
+    "comment": "Readers and writers for mass spectrometry data files and resources as well as spectrum and chromatogram structures."
+  },
+  {
+    "language": ["rust"],
+    "type": ["library", "executable"],
+    "name": "mzdeisotope",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mzdeisotope",
+    "comment": "Deisotoping and charge state deconvolution for spectra and feature maps."
+  },
+  {
+    "language": ["rust", "csharp"],
+    "type": ["library"],
+    "name": "thermorawfilereader.rs",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/thermorawfilereader.rs",
+    "comment": "FFI interface for reading Thermo RAW files from Rust via a self-hosted .NET runtime"
+  },
+  {
+    "language": ["rust", "wasm", "typescript"],
+    "type": ["library", "demo"],
+    "name": "mzdata-wasm",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mzdata-wasm",
+    "comment": "A demo of how to use WASM to run Rust code for mass spectrometry data processing in the browser. [Demo](https://mobiusklein.github.io/mzdata-wasm/app/mzdata-viewer.html)"
+  },
+  {
+    "language": ["rust"],
+    "type": ["library"],
+    "name": "mass-fragment-index",
+    "mode": "active",
+    "tags": [],
+    "repository": "https://github.com/mobiusklein/mass-fragment-index",
+    "comment": "A generic framework for constructing in-memory or on-disk rapid search indices."
+  }
+]

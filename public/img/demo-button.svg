@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="120"
+   height="120"
+   viewBox="0 0 31.75 31.75"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="demo-button.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="1.2256518"
+     inkscape:cx="335.73974"
+     inkscape:cy="37.938998"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect33497"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect33347"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
+       x="0.61057657"
+       y="14.959133"
+       id="text2366"><tspan
+         sodipodi:role="line"
+         id="tspan2364"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:expanded;font-size:12.7px;font-family:'Iosevka Fixed';-inkscape-font-specification:'Iosevka Fixed Heavy Expanded';stroke-width:0.264583"
+         x="0.61057657"
+         y="14.959133">DEMO</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.40229;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 12.761109,18.830741 c 1.6939,0.718477 5.730206,2.430499 7.61598,3.316517 1.885774,0.886018 1.945715,1.083439 0.117507,1.957551 -1.828208,0.874113 -5.544468,2.425273 -7.432625,3.116468 -1.888157,0.691194 -1.948095,0.521982 -1.975892,-1.139556 -0.0278,-1.661537 -0.02293,-5.091021 -0.02089,-6.530239 0.002,-1.439218 0.002,-1.439218 1.69592,-0.720741 z"
+       id="path33495"
+       inkscape:path-effect="#path-effect33497"
+       inkscape:original-d="m 11.067209,18.112264 c 3.387742,1.43709 7.424049,3.149112 11.135604,4.723229 0.06025,0.197722 0.120195,0.395142 0.179824,0.592273 -3.716098,1.551517 -7.432359,3.102677 -11.149007,4.653576 -0.05964,-0.168933 -0.119568,-0.338149 -0.179821,-0.507663 0.0048,-3.153495 0.0097,-6.582978 0.01342,-9.461415 z"
+       sodipodi:nodetypes="sccccs" />
+  </g>
+</svg>

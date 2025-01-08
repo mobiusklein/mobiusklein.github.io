@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  /* background-image: url("/test.png"); */
+  /* background-repeat: no-repeat; */
+  /* background-size: contain; */
+
+}
+
+.backdrop {
+  background-image: url("/test.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.2;
+  position: absolute;
+  left: 15%;
+  top: 5%;
+  /* width: 50em; */
+  /* height: 50em; */
+  min-height: 100%;
+  min-width: 50%;
+  z-index: -1;
+}
+
+li.list-paper {
+  list-style: "📰 ";
+}
+
+a {
+  @apply text-emerald-500;
+}
+
+a:hover {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2 !important;
+}
+
+a.nav-link {
+  @apply transition-all hover:text-emerald-500 dark:hover:text-neutral-200 text-neutral-800;
+}
+
+a.topic:hover::before {
+    content: "/";
+}

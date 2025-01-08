@@ -1,0 +1,126 @@
+[
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2024",
+    "abstract": "Accurate glycopeptide identification in mass spectrometry-based glycoproteomics is a challenging problem at scale. Recent innovation has been made in increasing the scope and accuracy of glycopeptide identifications, with more precise uncertainty estimates for each part of the structure. We present a dynamically adapting relative retention time model for detecting and correcting ambiguous glycan assignments that are difficult to detect from fragmentation alone, a layered approach to glycopeptide fragmentation modeling that improves N-glycopeptide identification in samples without compromising identification quality, and a site-specific method to increase the depth of the glycoproteome confidently identifiable even further. We demonstrate our techniques on a set of previously published datasets, showing the performance gains at each stage of optimization. These techniques are provided in the open-source glycomics and glycoproteomics platform GlycReSoft available at https://github.com/mobiusklein/glycresoft.",
+    "author": "Klein, Joshua and Carvalho, Luis and Zaia, Joseph",
+    "doi": "10.1038/s41467-024-50338-5",
+    "issn": "20411723",
+    "journal": "Nature Communications",
+    "month": "jul",
+    "number": "1",
+    "pages": "6168",
+    "pmid": "39039063",
+    "publisher": "Springer US",
+    "title": "Expanding N-glycopeptide identifications by modeling fragmentation, elution, and glycome connectivity",
+    "url": [
+      "http://dx.doi.org/10.1038/s41467-024-50338-5",
+      "https://www.nature.com/articles/s41467-024-50338-5"
+    ],
+    "volume": "15",
+    "year": "2024"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2020",
+    "abstract": "Glycopeptides identified by tandem mass spectrometry rely on identification of the peptide backbone sequence and attached glycan(s) by incomplete fragmentation of both moieties. This may lead to am...",
+    "author": "Klein, Joshua and Zaia, Joseph",
+    "doi": "10.1021/acs.jproteome.0c00051",
+    "issn": "1535-3893",
+    "journal": "Journal of Proteome Research",
+    "keywords": "ambiguity,bioinformatics,c18 chromatography,chromatogram extraction,chromatogram scoring,glycoproteomics,metallic cation adduction,retention time,software",
+    "month": "may",
+    "number": "5",
+    "pages": "2113--2121",
+    "title": "Relative Retention Time Estimation Improves N-Glycopeptide Identifications by LC\u2013MS/MS",
+    "url": ["https://pubs.acs.org/doi/10.1021/acs.jproteome.0c00051"],
+    "volume": "19",
+    "year": "2020"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2019",
+    "abstract": "Glycoinformatics is a critical resource for the study of glycobiology, and glycobiology is a necessary component for understanding the complex interface between intra- and extra-cellular spaces. Despite this, there is limited software available to scientists studying these topics, requiring each to create fundamental data structures and representations anew for each of their applications. This leads to poor uptake of standardization and loss of focus on the real problems. We present glypy, a library written in Python for reading, writing, manipulating, and transforming glycans at several levels of precision. In addition to understanding several standardized formats for textual representation of glycans, the library also provides APIs for major community database, including GlyTouCan and UnicarbKB. The library is freely available under the Apache 2 common license, with source code available at https://github.com/mobiusklein/glypy and documentation at https://glypy.readthedocs.io",
+    "author": "Klein, Joshua and Zaia, Joseph",
+    "doi": "10.1021/acs.jproteome.9b00367",
+    "issn": "1535-3893",
+    "journal": "Journal of Proteome Research",
+    "month": "sep",
+    "number": "9",
+    "pages": "3532--3537",
+    "publisher": "American Chemical Society",
+    "title": "glypy: An Open Source Glycoinformatics Library",
+    "url": [
+      "http://pubs.acs.org/doi/10.1021/acs.jproteome.9b00367",
+      "https://pubs.acs.org/doi/10.1021/acs.jproteome.9b00367"
+    ],
+    "volume": "18",
+    "year": "2019"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2018",
+    "author": "Klein, Joshua and Zaia, Joseph",
+    "doi": "10.1074/mcp.RP118.001070",
+    "issn": "1535-9476",
+    "journal": "Molecular & Cellular Proteomics",
+    "month": "mar",
+    "number": "3",
+    "pages": "571--575",
+    "pmid": "30563850",
+    "title": "psims - A Declarative Writer for mzML and mzIdentML for Python",
+    "url": ["http://www.mcponline.org/lookup/doi/10.1074/mcp.RP118.001070"],
+    "volume": "18",
+    "year": "2019"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2018b",
+    "abstract": "Proteoglycans are distributed in all animal tissues and play critical, multifaceted, physiological roles. Expressed in a spatially- and temporally-regulated manner, these molecules regulate interactions among growth factors and cell surface receptors and play key roles in basement membranes and other extracellular matrices. Due to the high degree of glycosylation by glycosaminoglycan (GAG), N-glycan and mucin-type O-glycan classes, the peptide sequence coverage of complex proteoglycans is revealed poorly by standard mass spectrometry-based proteomics methods. As a result, there is little information concerning how proteoglycan site specific glycosylation changes during normal and pathological processes. Here, we developed a workflow to improve sequence coverage and identification of glycosylated peptides in proteoglycans. We applied this workflow to the small leucine-rich proteoglycan decorin and the hyalectan proteoglycans; neurocan, brevican, and aggrecan. We characterized glycosylation of these proteoglycans using LC-MS methods easily implemented on instruments widely used in proteomics laboratories. For decorin, we assigned the linker-glycosite and three N-glycosylation sites. For neurocan and brevican, we identified densely glycosylated mucin-like regions in the extended domains. For aggrecan, we identified 50 linker-glycosites and mucin-type O-glycosites in the extended region and N-glycosites in the globular domains, many of which are novel and have not been observed previously. Most importantly, we demonstrate an LC-MS and bioinformatics approach that will enable routine analysis of proteoglycan glycosylation from biological samples to assess their role in pathophysiology",
+    "author": "Klein, Joshua A and Meng, Le and Zaia, Joseph",
+    "doi": "10.1074/mcp.RA118.000766",
+    "issn": "1535-9476",
+    "journal": "Molecular & Cellular Proteomics",
+    "month": "aug",
+    "number": "8",
+    "pages": "1578--1590",
+    "title": "Deep Sequencing of Complex Proteoglycans: A Novel Strategy for High Coverage and Site-specific Identification of Glycosaminoglycan-linked Peptides",
+    "url": [
+      "http://www.mcponline.org/content/early/2018/05/17/mcp.RA118.000766.full.pdf",
+      "http://www.mcponline.org/lookup/doi/10.1074/mcp.RA118.000766"
+    ],
+    "volume": "17",
+    "year": "2018"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2018a",
+    "abstract": "Motivation: Glycosylation is one of the most heterogeneous and complex protein post-translational modifi- cations. Liquid chromatography coupled mass spectrometry (LC-MS) is acommonhigh throughput method for analyzing complex biological samples. Accurate study of glycans require high resolution mass spe- ctrometry. Mass spectrometry data contains intricate sub-structures that encode mass and abundance, requiring several transformations before it can be used to identify biological molecules, requiring automa- ted tools to analyze samples in a high throughput setting. Existing tools for interpreting the resulting data do not take into account related glycans when evaluating individual observations, limiting their sensitivity. Results: We developed an algorithm for assigning glycan compositions from LC-MS data by exploring biosynthetic network relationships among glycans. Our algorithm optimizes a set of likelihood scoring functions based on glycan chemical properties but uses network Laplacian regularization and optionally prior information about expected glycan families to smooth the likelihood and thus achieve a consistent and more representative solution. Our method was able to identify as many, or more glycan compositions compared to previous approaches, and demonstrated greater sensitivity with regularization. Our network definition was tailored to N-glycans but the method may be applied to glycomics data from other glycan families likeO-glycans or heparan sulfate where the relationships between compositions can be expressed as a graph. Availability: Built Executable: http://www.bumc.bu.edu/msr/glycresoft/ Source Code: https://github.com/BostonUniversityCBMS/glycresoft Contact: jzaia@bu.edu",
+    "author": "Klein, Joshua and Carvalho, Luis and Zaia, Joseph",
+    "doi": "10.1093/bioinformatics/bty397",
+    "editor": "Wren, Jonathan",
+    "issn": "1367-4803",
+    "journal": "Bioinformatics",
+    "month": "oct",
+    "number": "20",
+    "pages": "3511--3518",
+    "title": "Application of network smoothing to glycan LC-MS profiling",
+    "url": [
+      "https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty397/5001382",
+      "https://academic.oup.com/bioinformatics/article/34/20/3511/5001382"
+    ],
+    "volume": "34",
+    "year": "2018"
+  },
+  {
+    "ENTRYTYPE": "article",
+    "ID": "Klein2024b",
+    "author": "Klein, Joshua and Lam, Henry and Mak, Tytus D. and Bittremieux, Wout and Perez-Riverol, Yasset and Gabriels, Ralf and Shofstahl, Jim and Hecht, Helge and Binz, Pierre-Alain and Kawano, Shin and {Van Den Bossche}, Tim and Carver, Jeremy and Neely, Benjamin A. and Mendoza, Luis and Suomi, Tomi and Claeys, Tine and Payne, Thomas and Schulte, Douwe and Sun, Zhi and Hoffmann, Nils and Zhu, Yunping and Neumann, Steffen and Jones, Andrew R. and Bandeira, Nuno and Vizcaíno, Juan Antonio and Deutsch, Eric W.",
+    "doi": "10.1021/acs.analchem.4c04091",
+    "issn": "0003-2700",
+    "journal": "Analytical Chemistry",
+    "title": "The Proteomics Standards Initiative Standardized Formats for Spectral Libraries and Fragment Ion Peak Annotations: mzSpecLib and mzPAF",
+    "url": ["https://pubs.acs.org/doi/10.1021/acs.analchem.4c04091"],
+    "year": "2024"
+  }
+]
