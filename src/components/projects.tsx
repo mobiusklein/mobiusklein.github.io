@@ -5,10 +5,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import * as _ from "lodash";
 
 import {
-  formatDate,
   getSWProjects,
   SWProject,
-  SWProjectMode,
   SWProjectType,
 } from "@/utils/posts";
 

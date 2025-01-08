@@ -2,8 +2,6 @@ import Link from "next/link";
 import { BibTeXInfo } from '../utils/posts';
 
 import {
-  formatDate,
-  getPublications,
   getNotFirstauthorBibTeX,
   getFirstAuthorBibTeX,
   collateBibTeX,
@@ -45,13 +43,13 @@ export function Publications() {
   const allNotFirstAuthorPubs = getNotFirstauthorBibTeX()
 
   const seenIds = new Set();
-  for(let pub of allFirstAuthorPubs) {
+  for(const pub of allFirstAuthorPubs) {
     if(seenIds.has(pub.ID)) {
       console.log(`Already had entry for ${pub.ID}`)
     }
     seenIds.add(pub.ID)
   }
-  for (let pub of allNotFirstAuthorPubs) {
+  for (const pub of allNotFirstAuthorPubs) {
     if (seenIds.has(pub.ID)) {
       console.log(`Already had entry for ${pub.ID}`);
     }

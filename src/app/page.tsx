@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { Timeline, TimelineEntry, TimelineSide } from "@/components/timeline";
@@ -22,7 +21,7 @@ export default function Home() {
             My PhD work was on mass spectrometry informatics for glycomics and
             glycoproteomics at{" "}
             <Link href="https://www.bumc.bu.edu/cbms/">
-              Boston University's Center for Biomedical Mass Spetrometry
+              Boston University&apos;s Center for Biomedical Mass Spetrometry
             </Link>
             . I have written algorithms for low-level signal processing and
             charge deconvolution, database search + post-processing, feature
