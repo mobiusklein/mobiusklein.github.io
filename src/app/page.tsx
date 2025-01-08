@@ -11,7 +11,7 @@ export default function Home() {
         </h1>
       </header>
       <section className="grid grid-cols-9">
-        <h2 className="text-xl font-semibold tracking-tighter">About</h2>
+        <h2 className="text-xl font-semibold tracking-tighter col-span-2">About</h2>
         <div className="col-span-7">
           <p className="mb-3">
             My name is Joshua Klein. I am a bioinformatician and a general
