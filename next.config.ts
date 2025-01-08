@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: "export",
-  basePath: "/nextjs-github-pages",
+  // basePath: "/nextjs-github-pages",
   /**
    * Disable server-based image optimization. Next.js does not support
    * dynamic features with static exports.
