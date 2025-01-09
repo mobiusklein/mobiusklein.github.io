@@ -105,7 +105,7 @@ export function Publications() {
 
                 const key = `${pub.ID}_${pub.journal.replaceAll(" ", "_")}_${pub.doi}_${year}_outer`
                 return (
-                  <li key={key} className="mb-2 list-paper text-base">
+                  <li key={key} className="mb-2 list-paper text-base ml-6">
                     <span
                       className="flex flex-col space-y-1 mb-4"
                       style={{ display: "contents" }}
@@ -124,7 +124,7 @@ export function Publications() {
                       </span>
                     </span>
                     {pub.url ? (
-                      <Link href={pub.url[0]}>Published at {pub.url[0]}</Link>
+                      <Link href={pub.url[0]} className="break-words">Published at {pub.url[0]}</Link>
                     ) : (
                       ""
                     )}

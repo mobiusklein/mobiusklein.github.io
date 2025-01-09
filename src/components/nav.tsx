@@ -23,32 +23,38 @@ const navItems = {
 export function Navbar() {
   return (
     <aside className="-ml-[8px] mb-16 tracking-tight">
-      <div className="lg:sticky lg:top-20">
+      <div className="lg:sticky lg:top-20 top-20 md:sticky">
         <nav
           className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
         >
-          <div className="flex flex-row space-x-1 pr-10 align-middle py-1 px-2 m-1 font-semibold text-xl">
-            <Image src="img/signal-3-svgrepo-com.svg" width={30} height={50} alt=""  />
+          <div className="flex md:flex-row lg:flex-row space-x-1 pr-10 align-middle py-1 px-2 m-1 font-semibold md:text-xl flex-col">
+            <Image
+              src="img/signal-3-svgrepo-com.svg"
+              width={30}
+              height={50}
+              alt=""
+            />
             <Link href={"/"} className="nav-link">
               Joshua Klein, PhD
             </Link>
           </div>
-          <div className="flex flex-row space-x-0 pr-10">
+          <div className="flex md:flex-row flex-col space-x-0 pr-10">
             {Object.entries(navItems).map(([path, { name, fragment }]) => {
               return (
                 <Link
                   key={path}
                   href={fragment ? fragment : path}
-                  className="nav-link topic transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  className="nav-link topic transition-all hover:text-neutral-800 dark:hover:text-neutral-200 py-1 px-2 m-1"
                 >
                   {name}
                 </Link>
               );
             })}
-          </div>
-          <div className="flex flex-row space-x-2 py-1">
-            <Link href="https://github.com/mobiusklein">
+            <Link
+              href="https://github.com/mobiusklein"
+              className=" py-0 px-2 m-1"
+            >
               <Image
                 src="img/github-svgrepo-com.svg"
                 width={30}
@@ -56,7 +62,10 @@ export function Navbar() {
                 alt="GitHub Profile"
               />
             </Link>
-            <Link href="https://www.linkedin.com/in/joshua-klein-a6155956/">
+            <Link
+              href="https://www.linkedin.com/in/joshua-klein-a6155956/"
+              className=" py-0 px-2 m-1"
+            >
               <Image
                 src="img/linkedin-svgrepo-com.svg"
                 width={30}

@@ -44,7 +44,7 @@ li.list-paper {
 }
 
 a {
-  @apply text-emerald-500;
+  @apply text-emerald-700;
 }
 
 a:hover {
@@ -56,6 +56,6 @@ a.nav-link {
   @apply transition-all hover:text-emerald-500 dark:hover:text-neutral-200 text-neutral-800;
 }
 
-a.topic:hover::before {
+/* a.topic:hover::before {
     content: "/";
-}
+} */
