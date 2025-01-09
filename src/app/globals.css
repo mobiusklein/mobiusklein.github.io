@@ -44,7 +44,7 @@ li.list-paper {
 }
 
 a {
-  @apply text-emerald-700;
+  @apply text-emerald-600;
 }
 
 a:hover {

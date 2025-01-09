@@ -117,18 +117,18 @@ export default function SWProjects() {
   const activeSWProjects = byMode['active'];
   return (
     <div>
-      <section className="text-lg mb-4">
+      <section className="md:text-lg mb-4 mx-2">
         {`
         My open-source software projects.
         `}
       </section>
       <section className="border-b-violet-800 border-b-2 mb-4">
-        <h4 className="text-lg text-neutral-800">Active</h4>
+        <h4 className="md:text-lg text-neutral-800">Active</h4>
         <p>These are the projects that are in active development.</p>
         <ul>
           {activeSWProjects.map((project) => {
             return (
-              <li key={project.name} className="list-disc">
+              <li key={project.name} className="list-disc mx-2">
                 <Link
                   href={project.repository}
                   className="font-mono"
@@ -156,7 +156,7 @@ export default function SWProjects() {
         <ul>
           {maintenanceSWProjects.map((project) => {
             return (
-              <li key={project.name} className="list-disc" id={project.name}>
+              <li key={project.name} className="list-disc mx-2" id={project.name}>
                 <Link
                   href={project.repository}
                   className="font-mono"

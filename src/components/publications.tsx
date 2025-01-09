@@ -29,7 +29,7 @@ const markSelfInAuthorList = (entry: BibTeXInfo) => {
       );
     }).reduce((state: React.ReactElement[], author, idx) => {
       if (idx != 0) {
-        state.push(<>{" and "}</>)
+        state.push(<>{", "}</>)
       }
       state.push(author)
       return state
@@ -97,7 +97,7 @@ export function Publications() {
         const pubs = params[1] as BibTeXInfo[];
         return (
           <div key={year} className="mb-6 border-b-4 border-b-violet-600">
-            <h3 className="text-neutral-600 dark:text-neutral-400 tabular-nums text-xl">
+            <h3 className="text-neutral-600 dark:text-neutral-400 tabular-nums md:text-xl text-base">
               {year}
             </h3>
             <ul>
@@ -110,7 +110,7 @@ export function Publications() {
                       className="flex flex-col space-y-1 mb-4"
                       style={{ display: "contents" }}
                     >
-                      <span className="flex flex-col md:flex-row space-x-0 md:space-x-2 text-lg">
+                      <span className="flex flex-col md:flex-row space-x-0 md:space-x-2 md:text-lg">
                         {markSelfInAuthorList(pub)}
                         {". "}
                         <i

@@ -141,7 +141,7 @@
     "mode": "active",
     "tags": [],
     "repository": "https://github.com/mobiusklein/mzdata-wasm",
-    "comment": "A demo of how to use WASM to run Rust code for mass spectrometry data processing in the browser. [Demo](https://mobiusklein.github.io/mzdata-wasm/app/mzdata-viewer.html)"
+    "comment": "A demo of how to use WASM to run Rust code for mass spectrometry data processing in the browser. [Demo](https://mobiusklein.github.io/mzdata-wasm/app/mzdata-viewer.html) is not mobile friendly"
   },
   {
     "language": ["rust"],
